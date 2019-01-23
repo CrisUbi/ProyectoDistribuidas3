@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"></link>
+         <link href="style.css" rel="stylesheet" id="bootstrap-css"></link>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="java_script/code.js"></script>
+    </h:head>
+   <body>
+
+        <div class="container">
+            <div class="row chat-window col-xs-5 col-md-3" id="chat_window_1" style="margin-left:10px;">
+                <div class="col-xs-12 col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading top-bar">
+                            <div class="col-md-8 col-xs-8">
+                                <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Chat</h3>
+                            </div>
+                            <div class="col-md-4 col-xs-4" style="text-align: right;">
+                                <a href="#"><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim"></span></a>
+                                <a href="#"><span class="glyphicon glyphicon-remove icon_close" data-id="chat_window_1"></span></a>
+                            </div>
+                        </div>
+                        <div class="panel-body msg_container_base" id="tabla">
+                            
+                            <div class="row msg_container base_receive">
+                               
+                                <div class="col-md-10 col-xs-10">
+                                    <div class="messages msg_receive">
+                                        <p id="conversacion"></p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="panel-footer">
+                            <div class="input-group">
+                                <input id="usuario" type="text" class="form-control input-sm chat_input" placeholder="Nombre Usuario" />
+                                <input id="mensaje" type="text" class="form-control input-sm chat_input" placeholder="Escribir Mensaje" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary btn-sm" id="btn_enviar">Enviar</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="java_script/codigo.js"></script>
+    </body>
+
+</html>
+
