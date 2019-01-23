@@ -1,7 +1,13 @@
-package pkg_cliente;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pkg_RMI_cliente;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.annotation.Resource;
 import javax.jms.Connection;
 import javax.jms.MapMessage;
@@ -15,30 +21,61 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "servlet_cliente", urlPatterns = {"/servlet_cliente"})
 public class servlet_cliente extends HttpServlet {
-    @Resource(mappedName="conexion_jms")
+
+    @Resource(mappedName = "conexion_jms")
     javax.jms.QueueConnectionFactory queueConnection;
-    @Resource(mappedName="destino_jms")
+    @Resource(mappedName = "destino_jms")
     javax.jms.Queue queue;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-        Connection  connection =queueConnection.createConnection();
-        Session session=connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
-        MessageProducer producer=session.createProducer(queue);
-        MapMessage message=session.createMapMessage();
-        message.setString("cedula","12233322");
-        message.setString("nombre","Juan");
-        message.setString("direccion","10 agosto");
-        producer.send(message);
-        producer.close();
-        session.close();
-        connection.close();        }
-        catch(Exception ex){            
-        ex.printStackTrace();
+        try (PrintWriter out = response.getWriter()) {
+            String nombre = "";
+            String mensaje = "";
+            Date fecha = new Date();
+            String ls_pantalla = "";
+            ls_pantalla += "<html>";
+            ls_pantalla += "<head>";
+            ls_pantalla += "</head>";
+            ls_pantalla += "<center><body>";
+            ls_pantalla += "<h2>Solicitudes de soporte o cambios</h2>";
+            ls_pantalla += "<form action='servlet_cliente' method='post'>";
+            ls_pantalla += "Nombre:<input type='text' name='nombre'" + " value='" + nombre + "'></input>";
+            ls_pantalla += "<br>";
+            ls_pantalla += "Mensaje:<textarea rows=\"10\" cols=\"40\" name='mensaje'" + " value='" + mensaje + "'>Escribe aqui tus solicitudes</textarea>";
+            ls_pantalla += "<br>";
+            ls_pantalla += "<input type='submit' value='enviar' name='boton'></input>";
+            ls_pantalla += "</form>";
+            ls_pantalla += "</body></center>";
+            ls_pantalla += "</html>";
+            out.println(ls_pantalla);
+            String is_boton = "";
+            is_boton = request.getParameter("boton");
+            nombre=request.getParameter("nombre");
+            mensaje=request.getParameter("mensaje");
+            System.out.println(mensaje);
+            if (is_boton.equals("enviar")) {
+                try {
+                    Connection connection = queueConnection.createConnection();
+                    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+                    MessageProducer producer = session.createProducer(queue);
+                    MapMessage message = session.createMapMessage();
+                    message.setString("nombre", nombre);
+                    message.setString("mensaje", mensaje);
+                    message.setString("fecha", String.valueOf(fecha.getDate()+"-"+(fecha.getMonth()+1)+"-"+(1900+   fecha.getYear())));
+                    producer.send(message);
+                    producer.close();
+                    session.close();
+                    connection.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
+
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
