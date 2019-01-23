@@ -32,7 +32,7 @@ public class Server_RMI extends UnicastRemoteObject implements  cls_interface{
    
     @Override
     public String insertar(Integer cedula, String apellido) throws RemoteException {
-         String sql = "INSERT INTO sys.actividad_jlal (`CODIGO_ACTIVIDAD`, `NOMBRE_ACTIVIDAD`) \n" +
+         String sql = "INSERT INTO actividad_jlal (`CODIGO_ACTIVIDAD`, `NOMBRE_ACTIVIDAD`) \n" +
 "	VALUES ("+cedula+", '"+apellido+"')";
         em1.getTransaction().begin();
         Query qe = em1.createNativeQuery(sql);

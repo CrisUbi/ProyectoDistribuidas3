@@ -4,26 +4,32 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
         <title>Actividad</title>
+        <div class="scrollmenu">
+            <a href="index.xhtml">Pagina1</a>
+            <a href="soporte.xhtml">Soporte</a>
+            <a href="Servidorchat.xhtml">ServidorChat</a>
+        </div>
     </h:head>
     <h:body>
-       <h:form id="form">
+        <h:form id="form">
             <h:inputText id="cedula" value="#{cls_RMI_cliente.cedula}" />
             <h:commandButton id="buscar" value="Buscar por Codigo" action="#{cls_RMI_cliente.buscar}"/>
-       </h:form>
+        </h:form>
         <h:form id="form1">
-		<h3>Ingreso de Actividad</h3>
-		<h:panelGrid columns="3">
-			<h:outputLabel for="pcedula">Codigo:</h:outputLabel>
-			 <h:inputText id="cedula1" value="#{cls_RMI_cliente.cedula}" />
-			<br></br>
-			<br></br>
-			<h:outputLabel for="papellido">Actividad:</h:outputLabel>
-			<h:inputText id="apellido" value="#{cls_RMI_cliente.apellido}" />
-			<br></br>
-			
-                            <br></br>
-			<h:commandButton id="insertar" value="Insertar" action="#{cls_RMI_cliente.insertar}"/>
-		</h:panelGrid>
-	</h:form>
-</h:body>
+            <h3>Ingreso de Actividad</h3>
+            <h:panelGrid columns="3">
+                <h:outputLabel for="pcedula">Codigo:</h:outputLabel>
+                <h:inputText id="cedula1" value="#{cls_RMI_cliente.cedula}" />
+                <br></br>
+                <br></br>
+                <h:outputLabel for="papellido">Actividad:</h:outputLabel>
+                <h:inputText id="apellido" value="#{cls_RMI_cliente.apellido}" />
+                <br></br>
+
+                <br></br>
+                <h:commandButton id="insertar" value="Insertar" action="#{cls_RMI_cliente.insertar}"/>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+    <footer><object type="text/html" data="http://localhost:8080/prj_chat_websocket/" width="1000" height="500" name="contenido"></object></footer>
 </html>
