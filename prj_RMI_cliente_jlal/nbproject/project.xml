@@ -3,11 +3,11 @@
     <type>org.netbeans.modules.web.project</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
-            <name>prj_RMI_cliente_jlal</name>
+            <name>prj_RMI_cliente</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries>
                 <library dirs="200">
-                    <file>${reference.prj_RMI_interface.jar}</file>
+                    <file>${reference.prj_RMI_interface_jlal.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
@@ -21,7 +21,7 @@
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
             <reference>
-                <foreign-project>prj_RMI_interface</foreign-project>
+                <foreign-project>prj_RMI_interface_jlal</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
                 <target>jar</target>
