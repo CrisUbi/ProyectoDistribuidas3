@@ -674,7 +674,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
             ArrayList<TipoCuenta> al = new ArrayList();
             for (Object[] row : l1) {
                 TipoCuenta al1 = new TipoCuenta();
-                al1.setCodigoTipo(((BigDecimal) row[0]).intValue());
+                al1.setCodigoTipo(((Integer) row[0]).intValue());
                 al1.setNombreTipo((String) row[1]);
                 al.add(al1);
             }

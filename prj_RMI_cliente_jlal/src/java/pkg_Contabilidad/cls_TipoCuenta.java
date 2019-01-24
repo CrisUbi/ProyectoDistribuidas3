@@ -104,7 +104,7 @@ public class cls_TipoCuenta {
         try
         {Registry registro=LocateRegistry.getRegistry("127.0.0.1",1095);
         cls_interface interface1=(cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
-        interface1.insertar(codigoTipo, nombreTipo);
+        interface1.insertarTipoCuenta(codigoTipo, nombreTipo);
         mensaje="Inserto Correctamente";
         }
         catch(RemoteException | NotBoundException ex)
@@ -122,7 +122,7 @@ public class cls_TipoCuenta {
         try {
             Registry registro = LocateRegistry.getRegistry("127.0.0.1", 1095);
             cls_interface interface1 = (cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
-            mensaje = interface1.eliminarAutor(codigoTipo);
+            mensaje = interface1.eliminarTipoCuenta(codigoTipo);
             buscartabla();
             codigoTipo = 0;
             nombreTipo = "";
