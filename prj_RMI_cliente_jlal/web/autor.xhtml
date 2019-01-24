@@ -22,6 +22,7 @@
         <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet"></link>
         <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet"></link>
         <link href="style.css" rel="stylesheet"></link>
+
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark default-color-dark fixed-top">
                 <a class="navbar-brand" href="faces/index.xhtml">Distribuidas</a>
@@ -49,6 +50,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="faces/tipocuenta.xhtml">Tipo de Cuenta</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="faces/Activo.xhtml">Activo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="faces/Actividad.xhtml">Actividad</a>
                         </li>
 
                     </ul>
@@ -86,10 +93,12 @@
                     <h:outputText value="Apellido:"/>
                     <h:inputText id="apellido" value="#{cls_autor.apellidoAutor}" />
                     <br></br>
-                    <h:commandButton id="registar" value="Registrar" action="#{cls_autor.insertar()}"> </h:commandButton>
-                    <h:commandButton id="modificar" value="modificar" action="#{cls_autor.modificar()}"> </h:commandButton>
-                    <h:commandButton id="eliminar" value="Eliminar" action="#{cls_autor.eliminar()}"> </h:commandButton>
-                    <h:commandButton id="buscar" value="Buscar" action="#{cls_autor.buscar()}"> </h:commandButton>
+                     </h:panelGrid>
+                    <h:panelGrid columns="4">
+                    <h:commandButton id="registar"  class="btn btn-sm btn-primary"  value="Registrar" action="#{cls_autor.insertar()}"> </h:commandButton>
+                    <h:commandButton id="modificar" class="btn btn-sm btn-success" value="modificar" action="#{cls_autor.modificar()}"> </h:commandButton>
+                    <h:commandButton id="eliminar" class="btn btn-sm btn-danger" value="Eliminar" action="#{cls_autor.eliminar()}"> </h:commandButton>
+                    <h:commandButton id="buscar" class="btn btn-sm btn-info"  value="Buscar" action="#{cls_autor.buscar()}"> </h:commandButton>
                 </h:panelGrid>
                 <h:outputText value="#{cls_autor.mensaje}"/>
             </center>

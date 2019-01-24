@@ -16,6 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import pkg_interface.ActividadJlal;
+import pkg_interface.ActivoJlal;
 import pkg_interface.AutorCuda;
 import pkg_interface.LibroCuda;
 import pkg_interface.Usuario;
@@ -75,7 +76,26 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
 
         return e;
     }
+    @Override
+ public ActivoJlal buscarActivo(Integer cedula) throws RemoteException {
+        String sql = "SELECT * FROM activo_jlal where CODIGO_ACTIVO=" + cedula + "";
+        Query qe = em1.createNativeQuery(sql);
+        List l1 = qe.getResultList();
+        String ls_nombre = "";
+        ActivoJlal e = new ActivoJlal();
+        if (l1.size() >= 1) {
+            Object[] ar_objeto = (Object[]) (l1.get(0));
+            ls_nombre = ar_objeto[1].toString();
+            e.setNombreActivo(ls_nombre);
 
+            mensaje = "";
+        } else {
+            mensaje = "No se encontro el PROVEEDOR";
+        }
+        System.out.println("Actividad:" + ls_nombre + "");
+
+        return e;
+    }
     @Override
     public ArrayList<ActividadJlal> buscar() throws RemoteException {
         String sql = "SELECT * FROM actividad_jlal ";
@@ -446,8 +466,8 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
 
     @Override
     public Usuario login(String nombre, String contrasena) throws RemoteException {
-        
-       String sql = "SELECT u FROM usuario u WHERE u.NOMBRE=:cod AND u.CONTRASENA=:pass";
+
+        String sql = "SELECT u FROM usuario u WHERE u.NOMBRE=:cod AND u.CONTRASENA=:pass";
         Query query = em1.createNativeQuery(sql).setParameter("cod", nombre).setParameter("pass", contrasena);
         List l1 = query.getResultList();
         String ls_nombre = "";
@@ -471,7 +491,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
 
     @Override
     public String insertarCuenta(Integer codigoCuenta, String nombreCuenta, int autor) throws RemoteException {
-         String sql = "INSERT INTO CUENTA (`CODIGO_CUENTA`, `CODIGO_TIPO`, `NOMBRE_CUENTA`) \n"
+        String sql = "INSERT INTO CUENTA (`CODIGO_CUENTA`, `CODIGO_TIPO`, `NOMBRE_CUENTA`) \n"
                 + "	VALUES (" + codigoCuenta + "," + autor + ", '" + nombreCuenta + "')";
         System.out.println(sql);
         em1.getTransaction().begin();
@@ -528,7 +548,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
 
     @Override
     public Cuenta Cuenta(Integer codigoCuenta) throws RemoteException {
-       String sql = "SELECT * FROM cuenta where CODIGO_TIPO=" + codigoCuenta + "";
+        String sql = "SELECT * FROM cuenta where CODIGO_TIPO=" + codigoCuenta + "";
         Query qe = em1.createNativeQuery(sql);
         List l1 = qe.getResultList();
         String ls_nombre = "";
@@ -537,7 +557,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
         if (l1.size() >= 1) {
             Object[] ar_objeto = (Object[]) (l1.get(0));
             ls_nombre = ar_objeto[2].toString();
-            ls_tipo= (Integer)ar_objeto[1];
+            ls_tipo = (Integer) ar_objeto[1];
             e.setNombreCuenta(ls_nombre);
             e.setCodigoTipo(ls_tipo);
             mensaje = "";
@@ -547,8 +567,8 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
         return e;
     }
 
-   public ArrayList<Integer> Cuentas1() throws RemoteException{
-       String sql = "SELECT * FROM cuentas";
+    public ArrayList<Integer> Cuentas1() throws RemoteException {
+        String sql = "SELECT * FROM cuentas";
         Query query = em1.createNativeQuery(sql);
         List<Object[]> l1 = query.getResultList();
         ArrayList<Integer> cuentas = null;
@@ -566,11 +586,11 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
             mensaje = "No se encontro autores";
         }
         return cuentas;
-   }
+    }
 
     @Override
     public String insertarTipoCuenta(Integer codigoTipo, String nombreTipo) throws RemoteException {
-       String sql = "INSERT INTO tipo_cuenta (`CODIGO_TIPO`, `NOMBRE_TIPO`) \n"
+        String sql = "INSERT INTO tipo_cuenta (`CODIGO_TIPO`, `NOMBRE_TIPO`) \n"
                 + "	VALUES (" + codigoTipo + ", '" + nombreTipo + "')";
         System.out.println(sql);
         em1.getTransaction().begin();
@@ -589,7 +609,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
 
     @Override
     public String modificarTipoCuenta(Integer codigoTipo, String nombreTipo) throws RemoteException {
-       String sql = "UPDATE tipo_cuenta SET `NOMBRE_AUTOR`=" + "'" + nombreTipo + "'" 
+        String sql = "UPDATE tipo_cuenta SET `NOMBRE_AUTOR`=" + "'" + nombreTipo + "'"
                 + "where `CODIGO_TIPO`=" + "'" + codigoTipo + "'";
         System.out.println(sql);
         em1.getTransaction().begin();
@@ -628,7 +648,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
 
     @Override
     public pkg_interface.TipoCuenta TipoCuenta(Integer codigoTipo) throws RemoteException {
-       String sql = "SELECT * FROM tipo_cuenta where CODIGO_TIPO=" + codigoTipo + "";
+        String sql = "SELECT * FROM tipo_cuenta where CODIGO_TIPO=" + codigoTipo + "";
         Query qe = em1.createNativeQuery(sql);
         List l1 = qe.getResultList();
         String ls_nombre = "";
@@ -646,7 +666,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
 
     @Override
     public ArrayList<TipoCuenta> TipoCuentas() throws RemoteException {
-       String sql = "SELECT * FROM TIPO_CUENTA";
+        String sql = "SELECT * FROM TIPO_CUENTA";
         Query query = em1.createNativeQuery(sql);
         List<Object[]> l1 = query.getResultList();
         ArrayList<TipoCuenta> tcuentas = null;
@@ -669,7 +689,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
 
     @Override
     public ArrayList<pkg_interface.Cuenta> Cuentas() throws RemoteException {
-       String sql = "SELECT * FROM TIPO_CUENTA";
+        String sql = "SELECT * FROM TIPO_CUENTA";
         Query query = em1.createNativeQuery(sql);
         List<Object[]> l1 = query.getResultList();
         ArrayList<Cuenta> cuentas = null;
@@ -713,5 +733,123 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
         return cuentas;
     }
 
-   
+    @Override
+    public String eliminar(Integer codigo) throws RemoteException {
+        String sql = "delete from sys.actividad_jlal where CODIGO_ACTIVIDAD=" + codigo + "";
+        
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String modificar(Integer codigo, String nombre) throws RemoteException {
+
+        String sql = "UPDATE sys.actividad_jlal SET `NOMBRE_ACTIVIDAD`=" + "'" + nombre + "'"
+                + "where `CODIGO_ACTIVIDAD`=" + "" + codigo + "";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se modifico satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo modificar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String insertarActivo(Integer codigo, String nombre) throws RemoteException {
+        String sql = "INSERT INTO sys.activo_jlal (`CODIGO_ACTIVO`, `NOMBRE_ACTIVO`) \n"
+                + "	VALUES (" + codigo + ", '" + nombre + "')";
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String eliminarActivo(Integer codigo) throws RemoteException {
+         String sql = "delete from sys.activo_jlal where CODIGO_ACTIVO=" + codigo + "";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            int li_filas = qe.executeUpdate();
+            if (li_filas >= 1) {
+                em1.getTransaction().commit();
+                mensaje = "Se eliminó satisfactoriamente";
+            }
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo eliminar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String modificarActivo(Integer codigo, String nombre) throws RemoteException {
+        String sql = "UPDATE sys.activo_jlal SET `NOMBRE_ACTIVO`=" + "'" + nombre + "'"
+                + "where `CODIGO_ACTIVO`=" + "'" + codigo + "'";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se modifico satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo modificar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public ArrayList<ActivoJlal> buscarActivo() throws RemoteException {
+        String sql = "SELECT * FROM sys.activo_jlal ";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<ActivoJlal> actividades = null;
+        if (l1.size() >= 1) {
+            ArrayList<ActivoJlal> al = new ArrayList();
+            for (Object[] row : l1) {
+                ActivoJlal al1 = new ActivoJlal();
+                al1.setCodigoActivo((Integer) row[0]);
+                al1.setNombreActivo((String) row[1]);
+                al.add(al1);
+            }
+            mensaje = "";
+            actividades = al;
+
+        } else {
+            mensaje = "No se encontro el PROVEEDOR";
+        }
+
+        return actividades;
+    }
+
 }

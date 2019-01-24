@@ -91,6 +91,7 @@ public final class cls_RMI_cliente {
         }
         System.out.println(mensaje);
       }
+    
      public void insertar()
     { 
         try
@@ -106,5 +107,36 @@ public final class cls_RMI_cliente {
         buscartabla();
         System.out.println(mensaje);
       }
+      public void eliminar()
+    { 
+        try
+        {Registry registro=LocateRegistry.getRegistry("127.0.0.1",1095);
+        cls_interface interface1=(cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
+        interface1.eliminar(cedula);
+        mensaje="Inserto Correctamente";
+        }
+        catch(RemoteException | NotBoundException ex)
+        { System.out.println("error");
+        mensaje="No se pudo insertar";
+        }
+        buscartabla();
+        System.out.println(mensaje);
+      }
+       public void modificar()
+    { 
+        try
+        {Registry registro=LocateRegistry.getRegistry("127.0.0.1",1095);
+        cls_interface interface1=(cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
+        interface1.modificar(cedula, apellido);
+        mensaje="Inserto Correctamente";
+        }
+        catch(RemoteException | NotBoundException ex)
+        { System.out.println("error");
+        mensaje="No se pudo insertar";
+        }
+        buscartabla();
+        System.out.println(mensaje);
+      }
+     
 }
 

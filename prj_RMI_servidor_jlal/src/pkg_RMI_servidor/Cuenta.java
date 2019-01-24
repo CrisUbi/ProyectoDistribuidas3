@@ -42,7 +42,7 @@ public class Cuenta implements Serializable {
     private String nombreCuenta;
     @JoinColumn(name = "CODIGO_TIPO", referencedColumnName = "CODIGO_TIPO")
     @ManyToOne(optional = false)
-    private TipoCuenta codigoTipo;
+    private Integer codigoTipo;
 
     public Cuenta() {
     }
@@ -67,14 +67,15 @@ public class Cuenta implements Serializable {
         this.nombreCuenta = nombreCuenta;
     }
 
-    public TipoCuenta getCodigoTipo() {
+    public Integer getCodigoTipo() {
         return codigoTipo;
     }
 
-    public void setCodigoTipo(TipoCuenta codigoTipo) {
+    public void setCodigoTipo(Integer codigoTipo) {
         this.codigoTipo = codigoTipo;
     }
 
+   
     @Override
     public int hashCode() {
         int hash = 0;

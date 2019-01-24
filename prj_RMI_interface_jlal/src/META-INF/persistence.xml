@@ -5,8 +5,7 @@
     <class>pkg_interface.LibroCuda</class>
     <class>pkg_interface.AutorCuda</class>
     <class>pkg_interface.Usuario</class>
-    <class>pkg_interface.Cuenta</class>
-    <class>pkg_interface.TipoCuenta</class>
+    <class>pkg_interface.ActivoJlal</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/distribuidas"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

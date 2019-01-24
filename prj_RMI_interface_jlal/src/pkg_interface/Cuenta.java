@@ -42,7 +42,7 @@ public class Cuenta implements Serializable {
     private String nombreCuenta;
     @JoinColumn(name = "CODIGO_TIPO", referencedColumnName = "CODIGO_TIPO")
     @ManyToOne(optional = false)
-    private int codigoTipo;
+    private Integer codigoTipo;
 
     public Cuenta() {
     }
@@ -71,7 +71,7 @@ public class Cuenta implements Serializable {
         return codigoTipo;
     }
 
-    public void setCodigoTipo(int codigoTipo) {
+    public void setCodigoTipo(Integer codigoTipo) {
         this.codigoTipo = codigoTipo;
     }
 

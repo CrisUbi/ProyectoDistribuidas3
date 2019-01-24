@@ -50,6 +50,13 @@
                         <li class="nav-item">
                             <a class="nav-link" href="faces/tipocuenta.xhtml">Tipo de Cuenta</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="faces/Activo.xhtml">Activo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="faces/Actividad.xhtml">Actividad</a>
+                        </li>
+
                     </ul>
 
                 </div>
@@ -94,10 +101,12 @@
                     <h:outputText value="Cantidad:"/>
                     <h:inputText id="cantidad" value="#{cls_libro.cantidadLibro}"/>
                     <br></br>
-                    <h:commandButton id="registar" value="Registrar" action="#{cls_libro.insertar()}"> </h:commandButton>
-                    <h:commandButton id="modificar" value="modificar" action="#{cls_libro.modificar()}"> </h:commandButton>
-                    <h:commandButton id="eliminar" value="Eliminar" action="#{cls_libro.eliminar()}"> </h:commandButton>
-                    <h:commandButton id="buscar" value="Buscar" action="#{cls_libro.buscar()}"> </h:commandButton>
+                    </h:panelGrid>
+                    <h:panelGrid columns="4">
+                    <h:commandButton id="registar" class="btn btn-sm btn-primary" value="Registrar" action="#{cls_libro.insertar()}"> </h:commandButton>
+                    <h:commandButton id="modificar" class="btn btn-sm btn-success" value="modificar" action="#{cls_libro.modificar()}"> </h:commandButton>
+                    <h:commandButton id="eliminar"  class="btn btn-sm btn-danger"  value="Eliminar" action="#{cls_libro.eliminar()}"> </h:commandButton>
+                    <h:commandButton id="buscar" class="btn btn-sm btn-info"  value="Buscar" action="#{cls_libro.buscar()}"> </h:commandButton>
                 </h:panelGrid>
                 <h:outputText value="#{cls_libro.mensaje}"/>
             </center>
