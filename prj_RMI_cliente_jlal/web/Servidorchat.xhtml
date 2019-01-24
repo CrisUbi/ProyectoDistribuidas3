@@ -3,14 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"></link>
+
         <title>Servidor Chat</title>
         <div class="scrollmenu">
-             <a href="faces/index.xhtml">Pagina1</a>
-            <a href="Soporte.xhtml">Soporte</a>
-            <a href="ServidorChat.xhtml">ServidorChat</a>
+            <a href="faces/index.xhtml">Pagina1</a>
+            <a href="http://localhost:8080/prj_RMI_cliente_jlal/faces/soporte.xhtml">Soporte</a>
+            <a href="http://localhost:8080/prj_RMI_cliente_jlal/faces/Servidorchat.xhtml">ServidorChat</a>
+            <a href="faces/autor.xhtml">Autor</a>
+            <a href="faces/libro.xhtml">Libro</a>
         </div>
     </h:head>
     <h:body>
-    <object type="text/html" data="http://localhost:8080/prj_chat_websocket/" width="1000" height="500" name="contenido"></object>
+        <object type="text/html" data="http://localhost:8080/prj_chat_websocket/" width="3000" height="200" name="contenido"></object>
     </h:body>
 </html>

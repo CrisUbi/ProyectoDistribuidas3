@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="x-ua-compatible" content="ie=edge"></meta>
+        <title>Libros</title>
+        <meta name="description" content=""></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"></link>
+
+        <div class="scrollmenu">
+            <a href="faces/index.xhtml">Pagina1</a>
+            <a href="http://localhost:8080/prj_RMI_cliente_jlal/faces/soporte.xhtml">Soporte</a>
+            <a href="http://localhost:8080/prj_RMI_cliente_jlal/faces/Servidorchat.xhtml">ServidorChat</a>
+            <a href="faces/autor.xhtml">Autor</a>
+            <a href="faces/libro.xhtml">Libro</a>
+        </div>
+        <script>$(document).ready(function () {
+                $('#example').DataTable();
+            });</script>
+    </h:head>
+    <h:body>
+
+        <div class="container">
+            <header class="page-header">
+                <div class="branding">
+                    <h1>LIBROS</h1>
+                </div>
+            </header>
+
+        </div>
+        <template id="autor-list"></template>
+
+        <h:form id="form1">
+            <center>
+                <h3>Ingreso de libro</h3>
+                <h:panelGrid columns="3">
+                    <h:outputText value="ISBN:"/>
+                    <h:inputText id="isbn" value="#{cls_libro.isbnLibro}" />
+                    <br></br>
+                    <h:outputLabel for="autor1" value="Autor " />
+                    <h:selectOneMenu value = "#{cls_libro.codigoAutor}"> 
+                        <f:selectItem itemLabel="Selecciona" itemValue="#{cls_libro.codigoAutor}" />
+                        <f:selectItems value="#{cls_libro.autores}" />   
+                    </h:selectOneMenu> 
+                    <br></br>
+                    <h:outputText value="Titulo:"/>
+                    <h:inputText id="titulo" value="#{cls_libro.tituloLibro}"/>
+                    <br></br>
+                    <h:outputText value="Valor:"/>
+                    <h:inputText id="valor" value="#{cls_libro.valorLibro}" />
+                    <br></br>
+                    <h:outputText value="Cantidad:"/>
+                    <h:inputText id="cantidad" value="#{cls_libro.cantidadLibro}"/>
+                    <br></br>
+                    <h:commandButton id="registar" value="Registrar" action="#{cls_libro.insertar()}"> </h:commandButton>
+                    <h:commandButton id="modificar" value="modificar" action="#{cls_libro.modificar()}"> </h:commandButton>
+                    <h:commandButton id="eliminar" value="Eliminar" action="#{cls_libro.eliminar()}"> </h:commandButton>
+                    <h:commandButton id="buscar" value="Buscar" action="#{cls_libro.buscar()}"> </h:commandButton>
+                </h:panelGrid>
+                <h:outputText value="#{cls_libro.mensaje}"/>
+            </center>
+            <div class="container">
+
+                <table  id="example" class="display" style="width:100%"> 
+                    <thead>
+                        <tr>
+                            <th>ISBN</th>
+                            <th>Autor</th>
+                            <th>Titulo</th>
+                            <th>Valor</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ui:repeat value="#{cls_libro.libros}" var="libro"> 
+                            <tr> 
+                                <td>#{libro.isbnLibro}</td> 
+                                <td>#{libro.codigoAutor}</td> 
+                                <td>#{libro.tituloLibro}</td>
+                                <td>#{libro.valorLibro}</td> 
+                                <td>#{libro.cantidadLibro}</td>
+                            </tr> 
+                        </ui:repeat> 
+                    </tbody>
+                </table> 
+            </div>
+        </h:form>
+    </h:body>
+    <footer><object type="text/html" data="http://localhost:8080/prj_chat_websocket/" width="1000" height="500" name="contenido"></object></footer>
+</html>
