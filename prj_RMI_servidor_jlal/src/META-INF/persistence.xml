@@ -3,6 +3,7 @@
   <persistence-unit name="prj_RMI_servidorPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>pkg_RMI_servidor.ActividadJlal</class>
+    <class>pkg_RMI_servidor.Usuario</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sys?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

@@ -7,7 +7,8 @@ import java.util.ArrayList;
 public interface cls_interface extends Remote {
 
     public ActividadJlal buscar(Integer cedula) throws RemoteException;
-     public ArrayList<Integer> Autores1() throws RemoteException;
+
+    public ArrayList<Integer> Autores1() throws RemoteException;
 
     public String insertar(Integer codigo, String nombre) throws RemoteException;
 
@@ -32,4 +33,14 @@ public interface cls_interface extends Remote {
     public LibroCuda Libro(Integer isbn) throws RemoteException;
 
     public ArrayList<LibroCuda> Libros() throws RemoteException;
+
+    public String insertarUsuario(Integer codigo,String nombre, String contrasena, String permisos) throws RemoteException;
+
+    public String modificarUsuario(Integer codigo,String nombre, String contrasena, String permisos) throws RemoteException;
+
+    public String eliminarUsuario(Integer codigo) throws RemoteException;
+
+    public Usuario usuario(Integer codigo) throws RemoteException;
+
+    public ArrayList<Usuario> Usuarios() throws RemoteException;
 }

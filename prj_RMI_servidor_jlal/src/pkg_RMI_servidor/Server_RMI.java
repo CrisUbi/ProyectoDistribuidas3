@@ -18,6 +18,7 @@ import javax.persistence.Query;
 import pkg_interface.ActividadJlal;
 import pkg_interface.AutorCuda;
 import pkg_interface.LibroCuda;
+import pkg_interface.Usuario;
 import pkg_interface.cls_interface;
 
 /**
@@ -311,6 +312,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
         }
         return autores;
     }
+
     @Override
     public ArrayList<Integer> Autores1() throws RemoteException {
         String sql = "SELECT * FROM autor_cuda";
@@ -320,8 +322,8 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
         if (l1.size() >= 1) {
             ArrayList<Integer> al = new ArrayList();
             for (Object[] row : l1) {
-                Integer al1 =0;
-                al1=(Integer) row[0];
+                Integer al1 = 0;
+                al1 = (Integer) row[0];
                 al.add(al1);
             }
             mensaje = "";
@@ -331,5 +333,112 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
             mensaje = "No se encontro autores";
         }
         return autores;
+    }
+
+    @Override
+    public String insertarUsuario(Integer codigo, String nombre, String contrasena, String permisos) throws RemoteException {
+        String sql = "INSERT INTO usuario (`CODIGO`, `NOMBRE`, `CONTRASENA`, `PERMISOS`) \n"
+                + "	VALUES (" + codigo + ", '" + nombre + "'" + ", '" + contrasena + "'" + ", '" + permisos + "')";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String modificarUsuario(Integer codigo, String nombre, String contrasena, String permisos) throws RemoteException {
+        String sql = "UPDATE usuario SET `NOMBRE`=" + "'" + nombre + "'" + ", `CONTRASENA`=" + "'" + contrasena + "'"
+                + ", `PERMISOS`=" + "'" + permisos + "'" + " where `CODIGO_AUTOR`=" + "'" + codigo + "'";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se modifico satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo modificar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String eliminarUsuario(Integer codigo) throws RemoteException {
+        String sql = "delete from usuario where CODIGO=" + codigo + "";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            int li_filas = qe.executeUpdate();
+            if (li_filas >= 1) {
+                em1.getTransaction().commit();
+                mensaje = "Se eliminó satisfactoriamente";
+            }
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo eliminar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public Usuario usuario(Integer codigo) throws RemoteException {
+        String sql = "SELECT * FROM usuario where CODIGO=" + codigo + "";
+        Query qe = em1.createNativeQuery(sql);
+        List l1 = qe.getResultList();
+        String ls_nombre = "";
+        String ls_contrasena = "";
+        String ls_permisos = "";
+        Usuario e = new Usuario();
+        if (l1.size() >= 1) {
+            Object[] ar_objeto = (Object[]) (l1.get(0));
+            ls_nombre = ar_objeto[1].toString();
+            ls_contrasena = ar_objeto[2].toString();
+            ls_permisos = ar_objeto[3].toString();
+            e.setNombre(ls_nombre);
+            e.setContrasena(ls_contrasena);
+            e.setPermisos(ls_permisos);
+            mensaje = "";
+        } else {
+            mensaje = "No se encontro el usuario";
+        }
+        return e;
+    }
+
+    @Override
+    public ArrayList<Usuario> Usuarios() throws RemoteException {
+        String sql = "SELECT * FROM usuario";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<Usuario> usuarios = null;
+        if (l1.size() >= 1) {
+            ArrayList<Usuario> al = new ArrayList();
+            for (Object[] row : l1) {
+                Usuario al1 = new Usuario();
+                al1.setCodigo((Integer) row[0]);
+                al1.setNombre((String) row[1]);
+                al1.setContrasena((String) row[2]);
+                al1.setPermisos((String) row[3]);
+                al.add(al1);
+            }
+            mensaje = "";
+            usuarios = al;
+
+        } else {
+            mensaje = "No se encontro usuarios";
+        }
+        return usuarios;
     }
 }
