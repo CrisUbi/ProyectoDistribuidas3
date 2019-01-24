@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+    </h:head>
+
+    <h:body>
+        <h:form>      
+
+            <div class ="panel" id="mainPnl" header="Inicio de Sesion" style="width: 30%; margin: auto; align-content: center;">
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="usuario" value="Usuario" />
+                    <h:inputText id="usuario" value="#{cls_usuario.nombre}" required="true" 
+                                 maxlength="15" requiredMessage="Debe ingresar el usuario" />
+                    <h:outputLabel for="clave" value="Contraseña" />
+                    <h:inputSecret id="clave" value="#{cls_usuario.contrasena}" required="true"  requiredMessage="Debe ingresar la contraseña"/>
+                </h:panelGrid>
+                
+                <h:commandButton value="Aceptar" action="#{cls_usuario.login()}" style="align-self: center; margin-top: 10px;"/>
+            </div>
+        </h:form>
+
+    </h:body>
+
+</html>
+

@@ -20,6 +20,8 @@ import pkg_interface.AutorCuda;
 import pkg_interface.LibroCuda;
 import pkg_interface.Usuario;
 import pkg_interface.cls_interface;
+import pkg_interface.Cuenta;
+import pkg_interface.TipoCuenta;
 
 /**
  *
@@ -357,7 +359,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
     @Override
     public String modificarUsuario(Integer codigo, String nombre, String contrasena, String permisos) throws RemoteException {
         String sql = "UPDATE usuario SET `NOMBRE`=" + "'" + nombre + "'" + ", `CONTRASENA`=" + "'" + contrasena + "'"
-                + ", `PERMISOS`=" + "'" + permisos + "'" + " where `CODIGO_AUTOR`=" + "'" + codigo + "'";
+                + ", `PERMISOS`=" + "'" + permisos + "'" + " where `CODIGO`=" + "'" + codigo + "'";
         System.out.println(sql);
         em1.getTransaction().begin();
         Query qe = em1.createNativeQuery(sql);
@@ -441,4 +443,275 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
         }
         return usuarios;
     }
+
+    @Override
+    public Usuario login(String nombre, String contrasena) throws RemoteException {
+        
+       String sql = "SELECT u FROM usuario u WHERE u.NOMBRE=:cod AND u.CONTRASENA=:pass";
+        Query query = em1.createNativeQuery(sql).setParameter("cod", nombre).setParameter("pass", contrasena);
+        List l1 = query.getResultList();
+        String ls_nombre = "";
+        String ls_contrasena = "";
+        String ls_permisos = "";
+        Usuario e = new Usuario();
+        if (l1.size() >= 1) {
+            Object[] ar_objeto = (Object[]) (l1.get(0));
+            ls_nombre = ar_objeto[1].toString();
+            ls_contrasena = ar_objeto[2].toString();
+            ls_permisos = ar_objeto[3].toString();
+            e.setNombre(ls_nombre);
+            e.setContrasena(ls_contrasena);
+            e.setPermisos(ls_permisos);
+            mensaje = "";
+        } else {
+            mensaje = "No se encontro el usuario";
+        }
+        return e;
+    }
+
+    @Override
+    public String insertarCuenta(Integer codigoCuenta, String nombreCuenta, int autor) throws RemoteException {
+         String sql = "INSERT INTO CUENTA (`CODIGO_CUENTA`, `CODIGO_TIPO`, `NOMBRE_CUENTA`) \n"
+                + "	VALUES (" + codigoCuenta + "," + autor + ", '" + nombreCuenta + "')";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String modificarCuenta(Integer codigoCuenta, String nombreCuenta, int cuenta) throws RemoteException {
+        String sql = "UPDATE libro_cuda SET `CODIGO_TIPO`=" + cuenta + ", `NOMBRE_CUENTA`=" + "'" + nombreCuenta + " where `CODIGO_CUENTA`=" + codigoCuenta;
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se modifico satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo modificar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String eliminarCuenta(Integer codigoCuenta) throws RemoteException {
+        String sql = "delete from cuenta where CODIGO_CUENTA=" + codigoCuenta + "";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            int li_filas = qe.executeUpdate();
+            if (li_filas >= 1) {
+                em1.getTransaction().commit();
+                mensaje = "Se eliminó satisfactoriamente";
+            }
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo eliminar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public Cuenta Cuenta(Integer codigoCuenta) throws RemoteException {
+       String sql = "SELECT * FROM cuenta where CODIGO_TIPO=" + codigoCuenta + "";
+        Query qe = em1.createNativeQuery(sql);
+        List l1 = qe.getResultList();
+        String ls_nombre = "";
+        Integer ls_tipo;
+        Cuenta e = new Cuenta();
+        if (l1.size() >= 1) {
+            Object[] ar_objeto = (Object[]) (l1.get(0));
+            ls_nombre = ar_objeto[2].toString();
+            ls_tipo= (Integer)ar_objeto[1];
+            e.setNombreCuenta(ls_nombre);
+            e.setCodigoTipo(ls_tipo);
+            mensaje = "";
+        } else {
+            mensaje = "No se encontro el Autor";
+        }
+        return e;
+    }
+
+   public ArrayList<Integer> Cuentas1() throws RemoteException{
+       String sql = "SELECT * FROM cuentas";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<Integer> cuentas = null;
+        if (l1.size() >= 1) {
+            ArrayList<Integer> al = new ArrayList();
+            for (Object[] row : l1) {
+                Integer al1 = 0;
+                al1 = (Integer) row[0];
+                al.add(al1);
+            }
+            mensaje = "";
+            cuentas = al;
+
+        } else {
+            mensaje = "No se encontro autores";
+        }
+        return cuentas;
+   }
+
+    @Override
+    public String insertarTipoCuenta(Integer codigoTipo, String nombreTipo) throws RemoteException {
+       String sql = "INSERT INTO tipo_cuenta (`CODIGO_TIPO`, `NOMBRE_TIPO`) \n"
+                + "	VALUES (" + codigoTipo + ", '" + nombreTipo + "')";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String modificarTipoCuenta(Integer codigoTipo, String nombreTipo) throws RemoteException {
+       String sql = "UPDATE tipo_cuenta SET `NOMBRE_AUTOR`=" + "'" + nombreTipo + "'" 
+                + "where `CODIGO_TIPO`=" + "'" + codigoTipo + "'";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se modifico satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo modificar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String eliminarTipoCuenta(Integer codigoTipo) throws RemoteException {
+        String sql = "delete from tipo_cuenta where codigo_tipo=" + codigoTipo + "";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            int li_filas = qe.executeUpdate();
+            if (li_filas >= 1) {
+                em1.getTransaction().commit();
+                mensaje = "Se eliminó satisfactoriamente";
+            }
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo eliminar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public pkg_interface.TipoCuenta TipoCuenta(Integer codigoTipo) throws RemoteException {
+       String sql = "SELECT * FROM tipo_cuenta where CODIGO_TIPO=" + codigoTipo + "";
+        Query qe = em1.createNativeQuery(sql);
+        List l1 = qe.getResultList();
+        String ls_nombre = "";
+        pkg_interface.TipoCuenta e = new pkg_interface.TipoCuenta();
+        if (l1.size() >= 1) {
+            Object[] ar_objeto = (Object[]) (l1.get(0));
+            ls_nombre = ar_objeto[1].toString();
+            e.setNombreTipo(ls_nombre);
+            mensaje = "";
+        } else {
+            mensaje = "No se encontro el Autor";
+        }
+        return e;
+    }
+
+    @Override
+    public ArrayList<TipoCuenta> TipoCuentas() throws RemoteException {
+       String sql = "SELECT * FROM TIPO_CUENTA";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<TipoCuenta> tcuentas = null;
+        if (l1.size() >= 1) {
+            ArrayList<TipoCuenta> al = new ArrayList();
+            for (Object[] row : l1) {
+                TipoCuenta al1 = new TipoCuenta();
+                al1.setCodigoTipo(((BigDecimal) row[0]).intValue());
+                al1.setNombreTipo((String) row[1]);
+                al.add(al1);
+            }
+            mensaje = "";
+            tcuentas = al;
+
+        } else {
+            mensaje = "No se encontro libros";
+        }
+        return tcuentas;
+    }
+
+    @Override
+    public ArrayList<pkg_interface.Cuenta> Cuentas() throws RemoteException {
+       String sql = "SELECT * FROM TIPO_CUENTA";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<Cuenta> cuentas = null;
+        if (l1.size() >= 1) {
+            ArrayList<Cuenta> al = new ArrayList();
+            for (Object[] row : l1) {
+                Cuenta al1 = new Cuenta();
+                al1.setCodigoCuenta(((BigDecimal) row[0]).intValue());
+                al1.setCodigoTipo(((BigDecimal) row[2]).intValue());
+                al1.setNombreCuenta((String) row[2]);
+                al.add(al1);
+            }
+            mensaje = "";
+            cuentas = al;
+
+        } else {
+            mensaje = "No se encontro libros";
+        }
+        return cuentas;
+    }
+
+    @Override
+    public ArrayList<Integer> TipoCuentas1() throws RemoteException {
+        String sql = "SELECT * FROM TIPO_CUENTA";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<Integer> cuentas = null;
+        if (l1.size() >= 1) {
+            ArrayList<Integer> al = new ArrayList();
+            for (Object[] row : l1) {
+                Integer al1 = 0;
+                al1 = (Integer) row[0];
+                al.add(al1);
+            }
+            mensaje = "";
+            cuentas = al;
+
+        } else {
+            mensaje = "No se encontro autores";
+        }
+        return cuentas;
+    }
+
+   
 }

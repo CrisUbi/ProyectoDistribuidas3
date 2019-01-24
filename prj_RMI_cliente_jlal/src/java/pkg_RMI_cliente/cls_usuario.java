@@ -10,6 +10,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.Column;
@@ -163,6 +165,25 @@ public class cls_usuario {
             mensaje = "No encontro Tabla";
         }
         System.out.println(mensaje);
+    }
+    
+    public Usuario login() {
+          Usuario usuarioCuda = null;
+        try{
+          
+            Registry registro = LocateRegistry.getRegistry("127.0.0.1", 1095);
+            cls_interface interface1 = (cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
+            try{
+                usuarioCuda =  interface1.login(nombre, contrasena);
+            }catch(Exception ex){
+                return null;
+            }
+            
+        }catch(RemoteException | NotBoundException ex){
+            Logger.getLogger(cls_usuario.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error");
+        }
+        return usuarioCuda;
     }
 
 }

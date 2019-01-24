@@ -41,6 +41,31 @@ public interface cls_interface extends Remote {
     public String eliminarUsuario(Integer codigo) throws RemoteException;
 
     public Usuario usuario(Integer codigo) throws RemoteException;
+    
+    public Usuario login(String nombre, String contrasena) throws RemoteException;
 
     public ArrayList<Usuario> Usuarios() throws RemoteException;
+    
+    public String insertarCuenta(Integer codigoCuenta, String nombreCuenta, int autor) throws RemoteException;
+
+    public String modificarCuenta(Integer codigoCuenta, String nombreCuenta, int cuenta) throws RemoteException;
+
+    public String eliminarCuenta(Integer codigoCuenta) throws RemoteException;
+
+    public Cuenta Cuenta(Integer codigoCuenta) throws RemoteException;
+
+    public ArrayList<Cuenta> Cuentas() throws RemoteException;
+    public ArrayList<Integer> Cuentas1() throws RemoteException;
+    
+    public String insertarTipoCuenta(Integer codigoTipo, String nombreTipo) throws RemoteException;
+
+    public String modificarTipoCuenta(Integer codigoTipo, String nombreTipo) throws RemoteException;
+
+    public String eliminarTipoCuenta(Integer codigoTipo) throws RemoteException;
+
+    public TipoCuenta TipoCuenta(Integer codigoTipo) throws RemoteException;
+
+    public ArrayList<TipoCuenta> TipoCuentas() throws RemoteException;
+     public ArrayList<Integer> TipoCuentas1() throws RemoteException;
+
 }

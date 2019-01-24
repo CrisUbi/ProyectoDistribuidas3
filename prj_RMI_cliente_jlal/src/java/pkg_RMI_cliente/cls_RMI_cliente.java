@@ -103,6 +103,7 @@ public final class cls_RMI_cliente {
         { System.out.println("error");
         mensaje="No se pudo insertar";
         }
+        buscartabla();
         System.out.println(mensaje);
       }
 }
