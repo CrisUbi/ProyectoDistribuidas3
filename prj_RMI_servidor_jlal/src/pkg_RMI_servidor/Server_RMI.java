@@ -7,6 +7,7 @@ package pkg_RMI_servidor;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -32,7 +33,7 @@ public class Server_RMI extends UnicastRemoteObject implements  cls_interface{
    
     @Override
     public String insertar(Integer cedula, String apellido) throws RemoteException {
-         String sql = "INSERT INTO actividad_jlal (`CODIGO_ACTIVIDAD`, `NOMBRE_ACTIVIDAD`) \n" +
+         String sql = "INSERT INTO sys.actividad_jlal (`CODIGO_ACTIVIDAD`, `NOMBRE_ACTIVIDAD`) \n" +
 "	VALUES ("+cedula+", '"+apellido+"')";
         em1.getTransaction().begin();
         Query qe = em1.createNativeQuery(sql);
@@ -70,6 +71,29 @@ public class Server_RMI extends UnicastRemoteObject implements  cls_interface{
         return e;  
     }
     
+       @Override
+       public ArrayList<ActividadJlal> buscar() throws RemoteException {
+        String sql = "SELECT * FROM actividad_jlal ";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<ActividadJlal> actividades = null;
+        if (l1.size() >= 1) {
+            ArrayList<ActividadJlal> al = new ArrayList();
+            for (Object[] row : l1) {
+                ActividadJlal al1 = new ActividadJlal();
+                al1.setCodigoActividad((Integer) row[0]);
+                al1.setNombreActividad((String) row[1]);
+                al.add(al1);
+            }
+            mensaje = "";
+            actividades = al;
 
+        } else {
+            mensaje = "No se encontro el PROVEEDOR";
+        }
+
+        
+        return actividades;  
+    }
     
 }

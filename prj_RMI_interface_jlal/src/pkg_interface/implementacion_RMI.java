@@ -2,6 +2,7 @@ package pkg_interface;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 
 public class implementacion_RMI extends UnicastRemoteObject implements cls_interface
@@ -24,5 +25,10 @@ public class implementacion_RMI extends UnicastRemoteObject implements cls_inter
         
         
         return "";
+    }
+
+    @Override
+    public ArrayList<ActividadJlal> buscar() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -5,9 +5,9 @@
     <h:head>
         <title>Actividad</title>
         <div class="scrollmenu">
-            <a href="index.xhtml">Pagina1</a>
-            <a href="soporte.xhtml">Soporte</a>
-            <a href="Servidorchat.xhtml">ServidorChat</a>
+             <a href="faces/index.xhtml">Pagina1</a>
+            <a href="Soporte.xhtml">Soporte</a>
+            <a href="ServidorChat.xhtml">ServidorChat</a>
         </div>
     </h:head>
     <h:body>
@@ -18,17 +18,22 @@
         <h:form id="form1">
             <h3>Ingreso de Actividad</h3>
             <h:panelGrid columns="3">
-                <h:outputLabel for="pcedula">Codigo:</h:outputLabel>
+                <h:outputLabel >Codigo:</h:outputLabel>
                 <h:inputText id="cedula1" value="#{cls_RMI_cliente.cedula}" />
                 <br></br>
                 <br></br>
-                <h:outputLabel for="papellido">Actividad:</h:outputLabel>
+                <h:outputLabel >Actividad:</h:outputLabel>
                 <h:inputText id="apellido" value="#{cls_RMI_cliente.apellido}" />
                 <br></br>
 
                 <br></br>
                 <h:commandButton id="insertar" value="Insertar" action="#{cls_RMI_cliente.insertar}"/>
             </h:panelGrid>
+            <h:dataTable value="#{cls_RMI_cliente.busca}" var="actividad" styleClass="table table-bordered table-hover text-black">
+                    <h:column  > <h:outputText value="#{actividad.codigoActividad}"/> </h:column>   
+                    <h:column > <h:outputText value="#{actividad.nombreActividad}"/> </h:column>
+              
+            </h:dataTable>
         </h:form>
     </h:body>
     <footer><object type="text/html" data="http://localhost:8080/prj_chat_websocket/" width="1000" height="500" name="contenido"></object></footer>
