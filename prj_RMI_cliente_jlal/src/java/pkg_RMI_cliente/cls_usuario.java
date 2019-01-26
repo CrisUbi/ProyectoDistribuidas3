@@ -185,9 +185,5 @@ public class cls_usuario {
         }
         return usuarioCuda;
     }
-    
-    public String loginE(){
-        return "hola";
-    }
 
 }
