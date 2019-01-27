@@ -198,10 +198,10 @@ public class cls_libro {
             Registry registro = LocateRegistry.getRegistry("127.0.0.1", 1095);
             cls_interface interface1 = (cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
             autores = interface1.Autores1();
-            mensaje = "Tabla encontrada";
+            mensaje = "Tabla encontrada11";
         } catch (RemoteException | NotBoundException ex) {
             System.out.println("error");
-            mensaje = "No encontro Tabla";
+            mensaje = "No encontro Tabla11";
         }
         System.out.println(mensaje);
     }

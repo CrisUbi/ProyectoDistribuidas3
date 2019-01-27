@@ -4,11 +4,15 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>pkg_RMI_servidor.ActividadJlal</class>
     <class>pkg_RMI_servidor.Usuario</class>
+    <class>pkg_RMI_servidor.DetalleCuda</class>
+    <class>pkg_RMI_servidor.CabeceraCuda</class>
+    <class>pkg_RMI_servidor.CabeceraComprobante</class>
+    <class>pkg_RMI_servidor.DetalleComprobante</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sys?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/distribuidas"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="1234"/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
     </properties>
   </persistence-unit>
 </persistence>

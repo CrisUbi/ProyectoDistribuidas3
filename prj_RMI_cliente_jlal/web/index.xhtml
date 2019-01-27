@@ -1,14 +1,14 @@
-<?xml version='1.0' encoding='UTF-8' ?> 
+    <?xml version='1.0' encoding='UTF-8' ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-       xmlns:ui="http://java.sun.com/jsf/facelets"
-       xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
 
     <h:head>
         <title><ui:insert name="title">Default Title</ui:insert></title>
     </h:head>
-<header>
-     <meta charset="utf-8"></meta>
+    <header>
+        <meta charset="utf-8"></meta>
         <meta http-equiv="x-ua-compatible" content="ie=edge"></meta>
         <title>Actividades</title>
         <meta name="description" content=""></meta>
@@ -25,51 +25,51 @@
         <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet"></link>
         <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet"></link>
         <link href="style.css" rel="stylesheet"></link>
-            <nav class="navbar navbar-expand-lg navbar-dark default-color-dark fixed-top">
-                <a class="navbar-brand" href="faces/index.xhtml">Distribuidas</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse " id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="faces/index.xhtml">Pagina1 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/prj_RMI_cliente_jlal/faces/soporte.xhtml">Soporte</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/prj_RMI_cliente_jlal/faces/Servidorchat.xhtml">ServidorChat</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faces/autor.xhtml">Autor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faces/libro.xhtml">Libro</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faces/cuenta.xhtml">Cuenta</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faces/tipocuenta.xhtml">Tipo de Cuenta</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faces/Activo.xhtml">Activo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faces/Actividad.xhtml">Actividad</a>
-                        </li>
+        <nav class="navbar navbar-expand-lg navbar-dark default-color-dark fixed-top">
+            <a class="navbar-brand" href="faces/index.xhtml">Distribuidas</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="faces/index.xhtml">Pagina1 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:8080/prj_RMI_cliente_jlal/faces/soporte.xhtml">Soporte</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:8080/prj_RMI_cliente_jlal/faces/Servidorchat.xhtml">ServidorChat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="faces/autor.xhtml">Autor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="faces/libro.xhtml">Libro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="faces/cuenta.xhtml">Cuenta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="faces/tipocuenta.xhtml">Tipo de Cuenta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="faces/Activo.xhtml">Activo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="faces/Actividad.xhtml">Actividad</a>
+                    </li>
 
-                    </ul>
+                </ul>
 
-                </div>
-            </nav>
-        </header>
+            </div>
+        </nav>
+    </header>
     <h:body>
         <h:form>      
-    <br></br>
-       <br></br>
-          <br></br>
-             <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
             <div class ="panel" id="mainPnl" header="Inicio de Sesion" style="width: 30%; margin: auto; align-content: center;">
                 <h:panelGrid columns="2">
                     <h:outputLabel for="usuario" value="Usuario" />
@@ -78,11 +78,12 @@
                     <h:outputLabel for="clave" value="Contraseña" />
                     <h:inputSecret id="clave" value="#{cls_usuario.contrasena}" required="true"  requiredMessage="Debe ingresar la contraseña"/>
                 </h:panelGrid>
-                
+
                 <h:commandButton value="Aceptar" action="#{cls_usuario.login()}" style="align-self: center; margin-top: 10px;"/>
             </div>
         </h:form>
 
+        <br />
     </h:body>
 
 </html>

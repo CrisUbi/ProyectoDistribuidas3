@@ -3,6 +3,7 @@ package pkg_interface;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public interface cls_interface extends Remote {
 
@@ -83,5 +84,33 @@ public interface cls_interface extends Remote {
     public ArrayList<TipoCuenta> TipoCuentas() throws RemoteException;
 
     public ArrayList<Integer> TipoCuentas1() throws RemoteException;
+
+    public String insertarCabeceraC(Date fechaP, String descripcion, Date fechaE) throws RemoteException;
+
+    public String modificarCabeceraC(Integer numero, Date fechaP, String descripcion, Date fechaE) throws RemoteException;
+
+    public String eliminarCabeceraC(Integer numero) throws RemoteException;
+
+    public CabeceraCuda CabeceraC(Integer numero) throws RemoteException;
+
+    public ArrayList<CabeceraCuda> CabecerasC() throws RemoteException;
+
+    public String insertarDetalleC(Integer numero, Integer ISBN, Integer cantidad) throws RemoteException;
+
+    public String modificarDetalleC(Integer numero, Integer ISBN, Integer cantidad) throws RemoteException;
+
+    public String eliminarDetalleC(Integer numero, Integer ISBN) throws RemoteException;
+
+    public DetalleCuda detalleC(Integer numero, Integer ISBN) throws RemoteException;
+
+    public ArrayList<DetalleCuda> DetallesC() throws RemoteException;
+
+    public ArrayList<DetalleCuda> Detalles(Integer numero) throws RemoteException;
+
+    public ArrayList<Integer> Libros1() throws RemoteException;
+
+    public ArrayList<Integer> Numeros1() throws RemoteException;
+    
+    public String asiento( Date fechaC, String observacion,Integer codigo, Integer cuenta,int cnt_debe,int cnt_haber) throws RemoteException;
 
 }

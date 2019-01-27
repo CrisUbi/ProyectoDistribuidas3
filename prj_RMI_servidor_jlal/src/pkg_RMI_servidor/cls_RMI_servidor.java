@@ -17,7 +17,7 @@ public class cls_RMI_servidor {
             }
             catch(Exception e)
             {         
-                System.out.println("Error");  
+                System.out.println("Error"+e);  
             }
     }
   

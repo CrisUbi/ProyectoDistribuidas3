@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="x-ua-compatible" content="ie=edge"></meta>
+        <title>Prestamo Libros</title>
+        <meta name="description" content=""></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"></link>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css"></link>
+        <link href="css/bootstrap.min.css" rel="stylesheet"></link>
+        <link href="css/bootstrap-datepicker.css" rel="stylesheet"></link>
+        <link href="css/style_nav.css" rel="stylesheet"></link>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+        <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet"></link>
+        <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet"></link>
+        <link href="style.css" rel="stylesheet"></link>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark default-color-dark fixed-top">
+                <a class="navbar-brand" href="faces/index.xhtml">Distribuidas</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="faces/index.xhtml">Pagina1 <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://localhost:8080/prj_RMI_cliente_jlal/faces/soporte.xhtml">Soporte</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://localhost:8080/prj_RMI_cliente_jlal/faces/Servidorchat.xhtml">ServidorChat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="faces/autor.xhtml">Autor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="faces/libro.xhtml">Libro</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="faces/cuenta.xhtml">Cuenta</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="faces/tipocuenta.xhtml">Tipo de Cuenta</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="faces/Activo.xhtml">Activo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="faces/Actividad.xhtml">Actividad</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </nav>
+        </header>
+        <script>$(document).ready(function () {
+                $('#example').DataTable();
+            });</script>
+    </h:head>
+    <h:body>
+
+        <div class="container">
+            <header class="page-header">
+                <div class="branding">
+                    <br></br>
+                    <h1>PRESTAMO LIBROS</h1>
+                </div>
+            </header>
+
+        </div>
+        <template id="prestamoL-list"></template>
+
+        <h:form id="form1">
+            <center>
+                <h3>PRESTAMO LIBRO</h3>
+                <h:panelGrid columns="10">
+                    <h:outputText value="Fecha Prestamo:"/>
+                    <p:calendar id="fechaPrestamo" pattern="yyyy-mm-dd"  value="#{cls_prestamo.fechaPrestamo}"  showOn="button"/>
+                    <br></br>
+                    <h:outputText value="Descripción:"/>
+                    <h:inputTextarea  id="descripcion" value="#{cls_prestamo.descripcionPrestamo}"/>
+                    <br></br>
+                    <h:outputText value="Fecha Entrega:"/>
+                    <p:calendar id="fechaE" pattern="yyyy-mm-dd" value="#{cls_prestamo.fechaentregaPrestamo}" showOn="button" />
+                    <br></br>
+                    <h:commandButton id="registar" class="btn btn-sm btn-primary" value="Registrar" action="#{cls_prestamo.insertar()}"> </h:commandButton>
+                </h:panelGrid>
+                <h:panelGrid columns="7">
+                    <h:outputText value="Libro:"/>
+                    <h:selectOneMenu  id="seleccion" style="display:block !important;" value = "#{cls_prestamo.libro}"> 
+                        <f:selectItem itemLabel="Selecciona" itemValue="#{cls_prestamo.libro}" />
+                        <f:selectItems value="#{cls_prestamo.libros}" />   
+                    </h:selectOneMenu> 
+                    <br></br>
+                    <h:outputText value="Cantidad:"/>
+                    <h:inputText  id="cantidad" value="#{cls_prestamo.cantida}"/>
+                    <br></br>
+                    <h:commandButton id="detalle" class="btn btn-sm btn-primary" value="Nuevo detalle" action="#{cls_prestamo.detalles()}"> </h:commandButton>
+                </h:panelGrid>
+            </center>     
+            <div class="container">
+                <table  id="example" class="display" style="width:100%"> 
+                    <thead>
+                        <tr>
+                            <th>ISBN Libro</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ui:repeat value="#{cls_prestamo.detalle}" var="libro"> 
+                            <tr> 
+                                <td>#{libro.detalleCudaPK.isbnLibro}</td> 
+                                <td>#{libro.cantidad}</td>      
+                            </tr> 
+                        </ui:repeat> 
+                    </tbody>
+                </table> 
+            </div>
+            <center>
+                <h:commandButton id="registar1" class="btn btn-sm btn-primary" value="Guardar" action="#{cls_prestamo.guardar()}"> </h:commandButton>
+            </center>
+        </h:form>
+    </h:body>
+    <footer><object type="text/html" data="http://localhost:8080/prj_chat_websocket/" width="1000" height="500" name="contenido"></object></footer>
+</html>

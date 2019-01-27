@@ -6,14 +6,18 @@
 package pkg_interface;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,6 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "LibroCuda.findByValorLibro", query = "SELECT l FROM LibroCuda l WHERE l.valorLibro = :valorLibro")
     , @NamedQuery(name = "LibroCuda.findByCantidadLibro", query = "SELECT l FROM LibroCuda l WHERE l.cantidadLibro = :cantidadLibro")})
 public class LibroCuda implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "libroCuda")
+    private List<DetalleCuda> detalleCudaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -121,6 +128,15 @@ public class LibroCuda implements Serializable {
     @Override
     public String toString() {
         return "pkg_interface.LibroCuda[ isbnLibro=" + isbnLibro + " ]";
+    }
+
+    @XmlTransient
+    public List<DetalleCuda> getDetalleCudaList() {
+        return detalleCudaList;
+    }
+
+    public void setDetalleCudaList(List<DetalleCuda> detalleCudaList) {
+        this.detalleCudaList = detalleCudaList;
     }
     
 }

@@ -9,8 +9,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -18,10 +23,12 @@ import javax.persistence.Query;
 import pkg_interface.ActividadJlal;
 import pkg_interface.ActivoJlal;
 import pkg_interface.AutorCuda;
+import pkg_interface.CabeceraCuda;
 import pkg_interface.LibroCuda;
 import pkg_interface.Usuario;
 import pkg_interface.cls_interface;
 import pkg_interface.Cuenta;
+import pkg_interface.DetalleCuda;
 import pkg_interface.TipoCuenta;
 
 /**
@@ -76,8 +83,9 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
 
         return e;
     }
+
     @Override
- public ActivoJlal buscarActivo(Integer cedula) throws RemoteException {
+    public ActivoJlal buscarActivo(Integer cedula) throws RemoteException {
         String sql = "SELECT * FROM activo_jlal where CODIGO_ACTIVO=" + cedula + "";
         Query qe = em1.createNativeQuery(sql);
         List l1 = qe.getResultList();
@@ -96,6 +104,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
 
         return e;
     }
+
     @Override
     public ArrayList<ActividadJlal> buscar() throws RemoteException {
         String sql = "SELECT * FROM actividad_jlal ";
@@ -736,7 +745,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
     @Override
     public String eliminar(Integer codigo) throws RemoteException {
         String sql = "delete from sys.actividad_jlal where CODIGO_ACTIVIDAD=" + codigo + "";
-        
+
         em1.getTransaction().begin();
         Query qe = em1.createNativeQuery(sql);
         try {
@@ -791,7 +800,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
 
     @Override
     public String eliminarActivo(Integer codigo) throws RemoteException {
-         String sql = "delete from sys.activo_jlal where CODIGO_ACTIVO=" + codigo + "";
+        String sql = "delete from sys.activo_jlal where CODIGO_ACTIVO=" + codigo + "";
         System.out.println(sql);
         em1.getTransaction().begin();
         Query qe = em1.createNativeQuery(sql);
@@ -850,6 +859,350 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
         }
 
         return actividades;
+    }
+
+    @Override
+    public String insertarCabeceraC(Date fechaP, String descripcion, Date fechaE) throws RemoteException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String sql = "INSERT INTO cabecera_cuda (`FECHA_PRESTAMO`, `DESCRIPCION_PRESTAMO`, `FECHAENTREGA_PRESTAMO`) \n"
+                + "	VALUES ('" + formatter.format(fechaP) + "', '" + descripcion + "'" + ",'"
+                + formatter.format(fechaE) + "')";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String modificarCabeceraC(Integer numero, Date fechaP, String descripcion, Date fechaE) throws RemoteException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String sql = "UPDATE cabecera_cuda SET `FECHA_PRESTAMO`='" + formatter.format(fechaP) + "', `DESCRIPCION_PRESTAMO`=" + "'" + descripcion + "'"
+                + ",`FECHAENTREGA_PRESTAMO`='" + formatter.format(fechaE) + "' where NUMERO_PRESTAMO=" + numero;
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se modifico satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo modificar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String eliminarCabeceraC(Integer numero) throws RemoteException {
+        String sql = "delete from cabecera_cuda where NUMERO_PRESTAMO=" + numero + "";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            int li_filas = qe.executeUpdate();
+            if (li_filas >= 1) {
+                em1.getTransaction().commit();
+                mensaje = "Se eliminó satisfactoriamente";
+            }
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo eliminar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public CabeceraCuda CabeceraC(Integer numero) throws RemoteException {
+        String sql = "SELECT * FROM cabecera_cuda where NUMERO_PRESTAMO=" + numero + "";
+        Query qe = em1.createNativeQuery(sql);
+        List l1 = qe.getResultList();
+        Date fechaP = null;
+        String descripcion;
+        Date fechaE = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        pkg_interface.CabeceraCuda e = new pkg_interface.CabeceraCuda();
+        if (l1.size() >= 1) {
+            Object[] ar_objeto = (Object[]) (l1.get(0));
+            try {
+                fechaP = formatter.parse(ar_objeto[1].toString());
+                fechaE = formatter.parse(ar_objeto[3].toString());
+            } catch (ParseException ex) {
+                Logger.getLogger(Server_RMI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            descripcion = ar_objeto[2].toString();
+            e.setFechaPrestamo(fechaP);
+            e.setDescripcionPrestamo(descripcion);
+            e.setFechaentregaPrestamo(fechaE);
+            mensaje = "";
+        } else {
+            mensaje = "No se encontro el Autor";
+        }
+        return e;
+    }
+
+    @Override
+    public ArrayList<CabeceraCuda> CabecerasC() throws RemoteException {
+        String sql = "SELECT * FROM cabecera_cuda";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<CabeceraCuda> cabecera = null;
+        if (l1.size() >= 1) {
+            ArrayList<CabeceraCuda> al = new ArrayList();
+            for (Object[] row : l1) {
+                CabeceraCuda al1 = new CabeceraCuda();
+                al1.setNumeroPrestamo((Integer) row[0]);
+                al1.setFechaPrestamo((Date) row[1]);
+                al1.setDescripcionPrestamo((String) row[2]);
+                al1.setFechaentregaPrestamo((Date) row[3]);
+                al.add(al1);
+            }
+            mensaje = "";
+            cabecera = al;
+
+        } else {
+            mensaje = "No se encontro cabeceras";
+        }
+        return cabecera;
+    }
+
+    @Override
+    public String insertarDetalleC(Integer numero, Integer ISBN, Integer cantidad) throws RemoteException {
+        String sql = "INSERT INTO detalle_cuda (`NUMERO_PRESTAMO`, `ISBN_LIBRO`, `CANTIDAD`) \n"
+                + "	VALUES (" + numero + "," + ISBN + "," + cantidad + ")";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String modificarDetalleC(Integer numero, Integer ISBN, Integer cantidad) throws RemoteException {
+        String sql = "UPDATE detalle_cuda SET `cantidad`=" + cantidad + " where NUMERO_PRESTAMO=" + numero + " and ISBN_LIBRO=" + ISBN;
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se modifico satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo modificar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String eliminarDetalleC(Integer numero, Integer ISBN) throws RemoteException {
+        String sql = "delete from detalle_cuda where NUMERO_PRESTAMO=" + numero + " and ISBN_LIBRO=" + ISBN;
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            int li_filas = qe.executeUpdate();
+            if (li_filas >= 1) {
+                em1.getTransaction().commit();
+                mensaje = "Se eliminó satisfactoriamente";
+            }
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo eliminar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public DetalleCuda detalleC(Integer numero, Integer ISBN) throws RemoteException {
+        String sql = "SELECT * FROM detalle_cuda where NUMERO_PRESTAMO=" + numero + " and ISBN_LIBRO=" + ISBN;
+        Query qe = em1.createNativeQuery(sql);
+        List l1 = qe.getResultList();
+        Integer cantidad;
+        pkg_interface.DetalleCuda e = new pkg_interface.DetalleCuda();
+        if (l1.size() >= 1) {
+            Object[] ar_objeto = (Object[]) (l1.get(0));
+            cantidad = Integer.valueOf(ar_objeto[2].toString());
+            e.setCantidad(cantidad);
+            mensaje = "";
+        } else {
+            mensaje = "No se encontro el Autor";
+        }
+        return e;
+    }
+
+    @Override
+    public ArrayList<DetalleCuda> DetallesC() throws RemoteException {
+        String sql = "SELECT * FROM detalle_cuda";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<DetalleCuda> detalles = null;
+        if (l1.size() >= 1) {
+            ArrayList<DetalleCuda> al = new ArrayList();
+            for (Object[] row : l1) {
+                DetalleCuda al1 = new DetalleCuda();
+                pkg_interface.DetalleCudaPK al2 = new pkg_interface.DetalleCudaPK();
+                al2.setNumeroPrestamo((Integer) row[0]);
+                al2.setIsbnLibro(((BigDecimal) row[1]).intValue());
+                al1.setDetalleCudaPK(al2);
+                al1.setCantidad((Integer) row[2]);
+                al.add(al1);
+            }
+            mensaje = "";
+            detalles = al;
+
+        } else {
+            mensaje = "No se encontro detalles";
+        }
+        return detalles;
+    }
+
+    @Override
+    public ArrayList<DetalleCuda> Detalles(Integer numero) throws RemoteException {
+        String sql = "SELECT * FROM detalle_cuda where NUMERO_PRESTAMO=" + numero;
+        System.out.println(sql);
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<DetalleCuda> detalles = null;
+        if (l1.size() >= 1) {
+            ArrayList<DetalleCuda> al = new ArrayList();
+            for (Object[] row : l1) {
+                DetalleCuda al1 = new DetalleCuda();
+                pkg_interface.DetalleCudaPK al2 = new pkg_interface.DetalleCudaPK();
+                al2.setNumeroPrestamo((Integer) row[0]);
+                System.out.println(al2.getNumeroPrestamo());
+                al2.setIsbnLibro(((BigDecimal) row[1]).intValue());
+                System.out.println(al2.getIsbnLibro());
+                al1.setDetalleCudaPK(al2);
+                al1.setCantidad((Integer) row[2]);
+                al.add(al1);
+            }
+            mensaje = "";
+            detalles = al;
+
+        } else {
+            mensaje = "No se encontro detalles";
+        }
+        return detalles;
+    }
+
+    @Override
+    public ArrayList<Integer> Libros1() throws RemoteException {
+        String sql = "SELECT * FROM libro_cuda";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<Integer> libros = null;
+        if (l1.size() >= 1) {
+            ArrayList<Integer> al = new ArrayList();
+            for (Object[] row : l1) {
+                Integer al1 = 0;
+                al1 = ((BigDecimal) row[0]).intValue();
+                al.add(al1);
+            }
+            mensaje = "";
+            libros = al;
+
+        } else {
+            mensaje = "No se encontro libros";
+        }
+        return libros;
+    }
+
+    @Override
+    public ArrayList<Integer> Numeros1() throws RemoteException {
+        String sql = "SELECT * FROM cabecera_cuda";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<Integer> numeros = null;
+        if (l1.size() >= 1) {
+            ArrayList<Integer> al = new ArrayList();
+            for (Object[] row : l1) {
+                Integer al1 = 0;
+                al1 = ((Integer) row[0]);
+                al.add(al1);
+            }
+            mensaje = "";
+            numeros = al;
+
+        } else {
+            mensaje = "No se encontro libros";
+        }
+        return numeros;
+    }
+
+    @Override
+    public String asiento(Date fechaC, String observacion, Integer codigo, Integer cuenta, int cnt_debe, int cnt_haber) throws RemoteException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String sql = "INSERT INTO cabecera_comprobante (`FECHA_CABECERA`, `OBSERVACIONES`) \n"
+                + "	VALUES ('" + formatter.format(fechaC) + "','" + observacion + "')";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+            sql = "SELECT * FROM cabecera_comprobante";
+             System.out.println(sql);
+            Query query = em1.createNativeQuery(sql);
+            List<Object[]> l1 = query.getResultList();
+            ArrayList<CabeceraComprobante> cabecera = null;
+            if (l1.size() >= 1) {
+                ArrayList<CabeceraComprobante> al = new ArrayList();
+                for (Object[] row : l1) {
+                    CabeceraComprobante al1 = new CabeceraComprobante();
+                    al1.setNumeroCabecera((Integer) row[0]);
+                    al1.setFechaCabecera((Date) row[1]);
+                    al1.setObservaciones((String) row[2]);
+                    al.add(al1);
+                }
+                mensaje = "";
+                cabecera = al;
+            } else {
+                mensaje = "No se encontro cabeceras";
+            }
+            Integer ncabecera = cabecera.get(cabecera.size() - 1).getNumeroCabecera();
+            sql = "INSERT INTO detalle_comprobante (`NUMERO_CABECERA`, `CODIGO_CUENTA`, `CANTIDAD_DEBE`, `CANTIDAD_HABER`) \n"
+                    + "	VALUES (" + ncabecera + "," + cuenta + "," + cnt_debe + "," + cnt_haber + ")";
+            System.out.println(sql);
+            em1.getTransaction().begin();
+            qe = em1.createNativeQuery(sql);
+            try {
+                qe.executeUpdate();
+                em1.getTransaction().commit();
+                mensaje = "Se insertó satisfactoriamente";
+            } catch (Exception ex) {
+                em1.getTransaction().rollback();
+                mensaje = "No se pudo insertar";
+            }
+            System.out.println(mensaje);
+            return mensaje;
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
     }
 
 }

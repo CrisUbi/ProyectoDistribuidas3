@@ -86,8 +86,8 @@
                     <h:outputText value="ISBN:"/>
                     <h:inputText id="isbn" value="#{cls_libro.isbnLibro}" />
                     <br></br>
-                    <h:outputLabel for="autor1" value="Autor " />
-                    <h:selectOneMenu value = "#{cls_libro.codigoAutor}"> 
+                    <h:outputText value="Autor:"/>
+                    <h:selectOneMenu   id="seleccion" style="display:block !important;" value = "#{cls_libro.codigoAutor}"> 
                         <f:selectItem itemLabel="Selecciona" itemValue="#{cls_libro.codigoAutor}" />
                         <f:selectItems value="#{cls_libro.autores}" />   
                     </h:selectOneMenu> 

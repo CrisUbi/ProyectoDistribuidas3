@@ -6,6 +6,10 @@
     <class>pkg_interface.AutorCuda</class>
     <class>pkg_interface.Usuario</class>
     <class>pkg_interface.ActivoJlal</class>
+    <class>pkg_interface.CabeceraCuda</class>
+    <class>pkg_interface.DetalleCuda</class>
+    <class>pkg_interface.CabeceraComprobante</class>
+    <class>pkg_interface.DetalleComprobante</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/distribuidas"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

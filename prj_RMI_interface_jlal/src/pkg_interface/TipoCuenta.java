@@ -6,7 +6,9 @@
 package pkg_interface;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +16,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,6 +33,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "TipoCuenta.findByCodigoTipo", query = "SELECT t FROM TipoCuenta t WHERE t.codigoTipo = :codigoTipo")
     , @NamedQuery(name = "TipoCuenta.findByNombreTipo", query = "SELECT t FROM TipoCuenta t WHERE t.nombreTipo = :nombreTipo")})
 public class TipoCuenta implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoTipo")
+    private List<Cuenta> cuentaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -85,6 +92,15 @@ public class TipoCuenta implements Serializable {
     @Override
     public String toString() {
         return "pkg_interface.TipoCuenta[ codigoTipo=" + codigoTipo + " ]";
+    }
+
+    @XmlTransient
+    public List<Cuenta> getCuentaList() {
+        return cuentaList;
+    }
+
+    public void setCuentaList(List<Cuenta> cuentaList) {
+        this.cuentaList = cuentaList;
     }
     
 }
