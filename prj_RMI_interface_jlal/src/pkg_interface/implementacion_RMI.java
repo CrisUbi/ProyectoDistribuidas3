@@ -303,5 +303,15 @@ public class implementacion_RMI extends UnicastRemoteObject implements cls_inter
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public ArrayList<CabeceraCuda> reporte1(Date fechaI, Date fechaF) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<AutorCuda> reporte2(Date fechaI, Date fechaF) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
  
 }

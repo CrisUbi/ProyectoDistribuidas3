@@ -1163,7 +1163,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
             em1.getTransaction().commit();
             mensaje = "Se insertó satisfactoriamente";
             sql = "SELECT * FROM cabecera_comprobante";
-             System.out.println(sql);
+            System.out.println(sql);
             Query query = em1.createNativeQuery(sql);
             List<Object[]> l1 = query.getResultList();
             ArrayList<CabeceraComprobante> cabecera = null;
@@ -1203,6 +1203,65 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
         }
         System.out.println(mensaje);
         return mensaje;
+    }
+
+    @Override
+    public ArrayList<CabeceraCuda> reporte1(Date fechaI, Date fechaF) throws RemoteException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        String sql = "SELECT C.FECHAENTREGA_PRESTAMO , sum(d.CANTIDAD) FROM cabecera_cuda C INNER JOIN detalle_cuda d on "
+                + "d.NUMERO_PRESTAMO = C.NUMERO_PRESTAMO where C.FECHAENTREGA_PRESTAMO BETWEEN '" + formatter.format(fechaI) + "' "
+                + "AND '" + formatter.format(fechaF) + "' GROUP BY `C`.`FECHAENTREGA_PRESTAMO` ASC";
+        Query query = em1.createNativeQuery(sql);
+        System.out.println(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<CabeceraCuda> cabecera = null;
+        if (l1.size() >= 1) {
+            ArrayList<CabeceraCuda> al = new ArrayList();
+            for (Object[] row : l1) {
+                CabeceraCuda al1 = new CabeceraCuda();
+                al1.setNumeroPrestamo(((BigDecimal) row[1]).intValue());
+                al1.setFechaPrestamo((Date) row[0]);
+                al.add(al1);
+            }
+            mensaje = "";
+            cabecera = al;
+
+        } else {
+            mensaje = "No se encontro cabeceras";
+        }
+        return cabecera;
+    }
+
+    @Override
+    public ArrayList<AutorCuda> reporte2(Date fechaI, Date fechaF) throws RemoteException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        String sql = " SELECT l.ISBN_LIBRO , l.TITULO_LIBRO , l.CANTIDAD_LIBRO ,a.CODIGO_AUTOR,a.NOMBRE_AUTOR,a.APELLIDO_AUTOR\n"
+                + "FROM libro_cuda l \n"
+                + "INNER JOIN autor_cuda a on a.CODIGO_AUTOR = l.CODIGO_AUTOR \n"
+                + "INNER JOIN detalle_cuda  d on d.ISBN_LIBRO = l.ISBN_LIBRO \n"
+                + "INNER JOIN cabecera_cuda  c on c.NUMERO_PRESTAMO = d.NUMERO_PRESTAMO where \n"
+                + "        c.FECHAENTREGA_PRESTAMO BETWEEN '" + formatter.format(fechaI) + "' "
+                + "AND '" + formatter.format(fechaF) + "' ORDER BY `C`.`FECHAENTREGA_PRESTAMO` ASC";
+        Query query = em1.createNativeQuery(sql);
+        System.out.println(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<AutorCuda> cabecera = null;
+        if (l1.size() >= 1) {
+            ArrayList<AutorCuda> al = new ArrayList();
+            for (Object[] row : l1) {
+                AutorCuda al1 = new AutorCuda();
+                al1.setCodigoAutor((Integer) row[2]);
+                al1.setNombreAutor(((BigDecimal) row[0]).toString()+" "+(String) row[1]);
+                al1.setApellidoAutor(((Integer) row[3]).toString()+" "+(String) row[4]+" "+(String) row[5]);
+                al.add(al1);
+            }
+            mensaje = "";
+            cabecera = al;
+
+        } else {
+            mensaje = "No se encontro cabeceras";
+        }
+        return cabecera;
     }
 
 }
