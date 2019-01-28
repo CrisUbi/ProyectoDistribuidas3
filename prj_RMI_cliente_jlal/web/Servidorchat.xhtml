@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"></link>
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css"></link>
@@ -14,101 +15,11 @@
         <link href="style.css" rel="stylesheet"></link>
         <title>Servidor Chat</title>
                <link href="style.css" rel="stylesheet"></link>
-                <style type="text/css">
-
-            * {
-                margin:0px;
-                padding:0px;
-            }
-
-            #header {
-                margin:auto;
-                width:1000px;
-                font-family:Arial, Helvetica, sans-serif;
-            }
-
-            ul, ol {
-                list-style:none;
-            }
-
-            .nav > li {
-                float:left;
-            }
-
-            .nav li a {
-                background-color:#000;
-                color:#fff;
-                text-decoration:none;
-                padding:10px 12px;
-                display:block;
-            }
-
-            .nav {
-                width:1000px; /*Le establecemos un ancho*/
-                margin:0 auto; /*Centramos automaticamente*/
-            }
-
-            .nav li a:hover {
-                background-color:#434343;
-            }
-
-            .nav li ul {
-                display:none;
-                position:absolute;
-                min-width:140px;
-            }
-
-            .nav li:hover > ul {
-                display:block;
-            }
-
-            .nav li ul li {
-                position:relative;
-            }
-
-            .nav li ul li ul {
-                right:-140px;
-                top:0px;
-            }
-
-        </style>
-        <header>
-            <div id="header">
-                <ul class="nav">
-                    <li><a href="">Inicio</a></li>
-                    <li><a href="">Biblioteca</a>
-                        <ul>
-                            <li><a href="faces/autor.xhtml">Autor</a></li>
-                            <li><a href="faces/libro.xhtml">Libro</a></li>
-                            <li><a href="faces/prestamoLibro.xhtml">Prestamo Libro</a></li>
-                            <li><a href="faces/reporteLibros.xhtml">Reporte 1</a></li>
-                            <li><a href="faces/reporteLC.xhtml">Reporte 2</a></li>      
-                        </ul>
-                    </li>
-                    <li><a href="">Contabilidad</a>
-                        <ul>
-                            <li><a href="faces/cuenta.xhtml">Cuenta</a></li>
-                            <li><a href="faces/tipocuenta.xhtml">Tipo de Cuenta</a></li>
-                            <li><a href=""></a></li>
-                            <li><a href=""></a></li>
-                            <li><a href=""></a></li>      
-                        </ul>
-                    </li>
-                    <li><a href="">Activos</a>
-                        <ul>
-                            <li><a href="faces/Activo.xhtml">Activo</a></li>
-                            <li><a href="faces/Actividad.xhtml">Actividad</a></li>
-                            <li><a href=""></a></li>
-                            <li><a href=""></a></li>
-                            <li><a href=""></a></li>      
-                        </ul>
-                    </li>
-                    <li><a href="http://localhost:8080/prj_RMI_cliente_jlal/faces/soporte.xhtml">Soporte</a></li>
-                    <li><a href="http://localhost:8080/prj_RMI_cliente_jlal/faces/Servidorchat.xhtml">ServidorChat</a></li>
-                    <li><a href="">Salir</a></li>
-                </ul>
-            </div>
-        </header>
+        <div id="header">
+            <ui:insert name="header">
+                <ui:include src="menu.xhtml" />
+            </ui:insert>
+        </div>
     </h:head>
     <h:body>
         <object type="text/html" data="http://localhost:8080/prj_chat_websocket/" width="3000" height="200" name="contenido"></object>
