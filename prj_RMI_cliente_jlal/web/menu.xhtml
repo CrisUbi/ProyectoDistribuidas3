@@ -8,7 +8,7 @@
     <h:head>
         <meta charset="utf-8"></meta>
         <meta http-equiv="x-ua-compatible" content="ie=edge"></meta>
-        <title>Reporte cantidad Libros</title>
+        <title>MENU</title>
         <meta name="description" content=""></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
         <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"/>
@@ -23,7 +23,7 @@
         <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet"></link>
         <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet"></link>
         <link href="style.css" rel="stylesheet"></link>
-                <style type="text/css">
+        <style type="text/css">
 
             * {
                 margin:0px;
@@ -118,55 +118,7 @@
                 </ul>
             </div>
         </header>
-        <script>$(document).ready(function () {
-                $('#example').DataTable();
-            });</script>
     </h:head>
     <h:body>
-
-        <div class="container">
-            <header class="page-header">
-                <div class="branding">
-                    <br></br>
-                    <h1>REPORTE CANTIDAD LIBROS A ENTREGAR</h1>
-                </div>
-            </header>
-
-        </div>
-        <template id="prestamoL-list"></template>
-
-        <h:form id="form1">
-            <center>
-                <h3>Ingrese las fechas</h3>
-                <h:panelGrid columns="10">
-                    <h:outputText value="Fecha Inicio:"/>
-                    <p:calendar id="fechaI" pattern="yyyy-mm-dd"  value="#{cls_reporte.fechaI}"  showOn="button"/>
-                    <br></br>
-                    <h:outputText value="Fecha Fin:"/>
-                    <p:calendar id="fechaF" pattern="yyyy-mm-dd" value="#{cls_reporte.fechaF}" showOn="button" />
-                    <br></br>
-                    <h:commandButton id="buscar" class="btn btn-sm btn-primary" value="Buscar" action="#{cls_reporte.buscar()}"> </h:commandButton>
-                </h:panelGrid>
-            </center>     
-            <div class="container">
-                <table  id="example" class="display" style="width:100%"> 
-                    <thead>
-                        <tr>
-                            <th>Fecha Entregar</th>
-                            <th>Cantidad de libros</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <ui:repeat value="#{cls_reporte.detalle}" var="libro"> 
-                            <tr> 
-                                <td>#{libro.fechaPrestamo}</td> 
-                                <td>#{libro.numeroPrestamo}</td>      
-                            </tr> 
-                        </ui:repeat> 
-                    </tbody>
-                </table> 
-            </div>
-        </h:form>
     </h:body>
-    <footer><object type="text/html" data="http://localhost:8080/prj_chat_websocket/" width="1000" height="500" name="contenido"></object></footer>
 </html>

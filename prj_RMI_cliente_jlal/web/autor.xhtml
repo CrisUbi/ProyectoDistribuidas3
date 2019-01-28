@@ -22,46 +22,100 @@
         <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet"></link>
         <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet"></link>
         <link href="style.css" rel="stylesheet"></link>
+        <style type="text/css">
 
+            * {
+                margin:0px;
+                padding:0px;
+            }
+
+            #header {
+                margin:auto;
+                width:1000px;
+                font-family:Arial, Helvetica, sans-serif;
+            }
+
+            ul, ol {
+                list-style:none;
+            }
+
+            .nav > li {
+                float:left;
+            }
+
+            .nav li a {
+                background-color:#000;
+                color:#fff;
+                text-decoration:none;
+                padding:10px 12px;
+                display:block;
+            }
+
+            .nav {
+                width:1000px; /*Le establecemos un ancho*/
+                margin:0 auto; /*Centramos automaticamente*/
+            }
+
+            .nav li a:hover {
+                background-color:#434343;
+            }
+
+            .nav li ul {
+                display:none;
+                position:absolute;
+                min-width:140px;
+            }
+
+            .nav li:hover > ul {
+                display:block;
+            }
+
+            .nav li ul li {
+                position:relative;
+            }
+
+            .nav li ul li ul {
+                right:-140px;
+                top:0px;
+            }
+
+        </style>
         <header>
-            <nav class="navbar navbar-expand-lg navbar-dark default-color-dark fixed-top">
-                <a class="navbar-brand" href="faces/index.xhtml">Distribuidas</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse " id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="faces/index.xhtml">Pagina1 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/prj_RMI_cliente_jlal/faces/soporte.xhtml">Soporte</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/prj_RMI_cliente_jlal/faces/Servidorchat.xhtml">ServidorChat</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faces/autor.xhtml">Autor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faces/libro.xhtml">Libro</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faces/cuenta.xhtml">Cuenta</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faces/tipocuenta.xhtml">Tipo de Cuenta</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faces/Activo.xhtml">Activo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faces/Actividad.xhtml">Actividad</a>
-                        </li>
-
-                    </ul>
-
-                </div>
-            </nav>
+            <div id="header">
+                <ul class="nav">
+                    <li><a href="">Inicio</a></li>
+                    <li><a href="">Biblioteca</a>
+                        <ul>
+                            <li><a href="faces/autor.xhtml">Autor</a></li>
+                            <li><a href="faces/libro.xhtml">Libro</a></li>
+                            <li><a href="faces/prestamoLibro.xhtml">Prestamo Libro</a></li>
+                            <li><a href="faces/reporteLibros.xhtml">Reporte 1</a></li>
+                            <li><a href="faces/reporteLC.xhtml">Reporte 2</a></li>      
+                        </ul>
+                    </li>
+                    <li><a href="">Contabilidad</a>
+                        <ul>
+                            <li><a href="faces/cuenta.xhtml">Cuenta</a></li>
+                            <li><a href="faces/tipocuenta.xhtml">Tipo de Cuenta</a></li>
+                            <li><a href=""></a></li>
+                            <li><a href=""></a></li>
+                            <li><a href=""></a></li>      
+                        </ul>
+                    </li>
+                    <li><a href="">Activos</a>
+                        <ul>
+                            <li><a href="faces/Activo.xhtml">Activo</a></li>
+                            <li><a href="faces/Actividad.xhtml">Actividad</a></li>
+                            <li><a href=""></a></li>
+                            <li><a href=""></a></li>
+                            <li><a href=""></a></li>      
+                        </ul>
+                    </li>
+                    <li><a href="http://localhost:8080/prj_RMI_cliente_jlal/faces/soporte.xhtml">Soporte</a></li>
+                    <li><a href="http://localhost:8080/prj_RMI_cliente_jlal/faces/Servidorchat.xhtml">ServidorChat</a></li>
+                    <li><a href="">Salir</a></li>
+                </ul>
+            </div>
         </header>
         <script>$(document).ready(function () {
                 $('#example').DataTable();
@@ -93,8 +147,8 @@
                     <h:outputText value="Apellido:"/>
                     <h:inputText id="apellido" value="#{cls_autor.apellidoAutor}" />
                     <br></br>
-                     </h:panelGrid>
-                    <h:panelGrid columns="4">
+                </h:panelGrid>
+                <h:panelGrid columns="4">
                     <h:commandButton id="registar"  class="btn btn-sm btn-primary"  value="Registrar" action="#{cls_autor.insertar()}"> </h:commandButton>
                     <h:commandButton id="modificar" class="btn btn-sm btn-success" value="modificar" action="#{cls_autor.modificar()}"> </h:commandButton>
                     <h:commandButton id="eliminar" class="btn btn-sm btn-danger" value="Eliminar" action="#{cls_autor.eliminar()}"> </h:commandButton>
