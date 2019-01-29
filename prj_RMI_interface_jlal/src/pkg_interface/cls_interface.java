@@ -140,4 +140,30 @@ public interface cls_interface extends Remote {
     public MantenimientoJlal buscarActivoMante(Integer numeroMantenimiento) throws RemoteException;
 
     public ArrayList<MantenimientoJlal> buscarMante() throws RemoteException;
+    
+    
+    public String insertarCabeceraComprobante(Date fechaCab, String observaciones) throws RemoteException;
+
+    public String modificarCabeceraComprobante(Integer numeroCab, Date fechaCab, String observaciones) throws RemoteException;
+
+    public String eliminarCabeceraComprobante(Integer numeroCab) throws RemoteException;
+	public CabeceraComprobante CabeceraComprobante(Integer numero) throws RemoteException;
+
+    public ArrayList<CabeceraComprobante> CabecerasComp() throws RemoteException;
+
+    public String insertarDetalleComprobante(Integer numeroD, Integer cantidadHaber, Integer cantidadDebe,Integer numeroCab,Integer codigoCuenta ) throws RemoteException;
+
+    public String modificarDetalleComprobante(Integer numeroD, Integer cantidadHaber, Integer cantidadDebe,Integer numeroCab,Integer codigoCuenta) throws RemoteException;
+
+    public String eliminarDetalleComprobante(Integer numeroD) throws RemoteException;
+	
+	public DetalleComprobante detalleComprobante(Integer numero,Integer codigoCuenta) throws RemoteException;
+
+    public ArrayList<DetalleComprobante> DetallesComp() throws RemoteException;
+
+    public ArrayList<DetalleComprobante> DetallesComprobante(Integer numero) throws RemoteException;
+
+	public ArrayList<CabeceraComprobante> reporteCabeceraComprobante(Date fechaI, Date fechaF) throws RemoteException;
+
+    public ArrayList<DetalleComprobante> reporteDetalle(Date fechaI, Date fechaF) throws RemoteException;
 }
