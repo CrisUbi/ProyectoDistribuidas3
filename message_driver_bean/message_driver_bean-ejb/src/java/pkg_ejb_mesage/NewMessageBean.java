@@ -5,6 +5,8 @@
  */
 package pkg_ejb_mesage;
 
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.jms.Message;
@@ -37,7 +39,10 @@ public class NewMessageBean implements MessageListener {
             System.out.print("Nombre:" + msg.getString("nombre"));
             System.out.print("Mensaje:" + msg.getString("mensaje"));
             System.out.print("Fecha:" + msg.getString("fecha"));
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("message_driver_bean-ejbPU");
+            /*Registry registro = LocateRegistry.getRegistry("127.0.0.1", 1095);
+            cls_interface interface1 = (cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
+            interface1.soporte(msg.getString("nombre"), msg.getString("mensaje"), msg.getString("fecha"));*/
+           EntityManagerFactory factory = Persistence.createEntityManagerFactory("message_driver_bean-ejbPU");
             EntityManager em1 = factory.createEntityManager();
             Soporte c1 = new Soporte();
             c1.setNombre(msg.getString("nombre"));

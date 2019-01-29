@@ -58,24 +58,29 @@
                     <h:commandButton id="buscar" class="btn btn-sm btn-primary" value="Buscar" action="#{cls_reporte.reporte1()}"> </h:commandButton>
                 </h:panelGrid>
             </center>     
-            <div class="container">
-                <table  id="example" class="display" style="width:100%"> 
-                    <thead>
-                        <ui:repeat value="#{cls_reporte.reporte}" var="libro1"> 
-                            <tr>
-                                <td>#{libro1.nombreAutor}</td>    
-                            </tr> 
-                        </ui:repeat> 
-                    </thead>
-                    <tbody>
-                        <ui:repeat value="#{cls_reporte.reporte}" var="libro"> 
-                            <tr> 
-                                <td>#{libro.apellidoAutor}</td>      
-                            </tr> 
-                        </ui:repeat> 
-                    </tbody>
-                </table> 
-            </div>
+            <p:dataTable id="tbl" var="car" value="#{cls_reporte.reporte}"
+                         paginator="true" rows="15" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="FECHA ENTREGA" />
+                    </f:facet>
+                    <h:outputText value="#{car.apellidoAutor}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="CANTIDAD LIBROS" />
+                    </f:facet>
+                    <h:outputText value="#{car.nombreAutor}" />
+                </p:column>
+            </p:dataTable>
+          
+            <p:commandButton value="Excel" ajax="false" >
+                <p:dataExporter type="xls" target="tbl" fileName="reporte2"/>
+            </p:commandButton>
+            <p:commandButton value="PDF" ajax="false" >
+                <p:dataExporter type="pdf" target="tbl" fileName="reporte2"/>
+            </p:commandButton>
         </h:form>
     </h:body>
     <footer><object type="text/html" data="http://localhost:8080/prj_chat_websocket/" width="1000" height="500" name="contenido"></object></footer>

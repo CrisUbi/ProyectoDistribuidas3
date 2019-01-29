@@ -8,6 +8,7 @@
     <class>pkg_RMI_servidor.CabeceraCuda</class>
     <class>pkg_RMI_servidor.CabeceraComprobante</class>
     <class>pkg_RMI_servidor.DetalleComprobante</class>
+    <class>pkg_RMI_servidor.Soporte</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/distribuidas"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

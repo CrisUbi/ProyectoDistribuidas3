@@ -1251,8 +1251,8 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
             for (Object[] row : l1) {
                 AutorCuda al1 = new AutorCuda();
                 al1.setCodigoAutor((Integer) row[2]);
-                al1.setNombreAutor(((BigDecimal) row[0]).toString()+" "+(String) row[1]);
-                al1.setApellidoAutor(((Integer) row[3]).toString()+" "+(String) row[4]+" "+(String) row[5]);
+                al1.setNombreAutor(((BigDecimal) row[0]).toString() + " " + (String) row[1]);
+                al1.setApellidoAutor(((Integer) row[3]).toString() + " " + (String) row[4] + " " + (String) row[5]);
                 al.add(al1);
             }
             mensaje = "";
@@ -1262,6 +1262,25 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
             mensaje = "No se encontro cabeceras";
         }
         return cabecera;
+    }
+
+    @Override
+    public void soporte(String nombre, String mensaje, String fecha) throws RemoteException {
+        Soporte c1 = new Soporte();
+        c1.setNombre(nombre);
+        c1.setMensaje(mensaje);
+        c1.setFecha(fecha);
+        try {
+            em1.getTransaction().begin();
+            em1.persist(c1);
+            em1.getTransaction().commit();
+            System.out.println("correcto Soporte");
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+        }
+        em1.close();
+        factory.close();
+
     }
 
 }

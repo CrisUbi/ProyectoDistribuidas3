@@ -114,7 +114,8 @@ public interface cls_interface extends Remote {
     public String asiento(Date fechaC, String observacion, Integer codigo, Integer cuenta, int cnt_debe, int cnt_haber) throws RemoteException;
 
     public ArrayList<CabeceraCuda> reporte1(Date fechaI, Date fechaF) throws RemoteException;
-    
+
     public ArrayList<AutorCuda> reporte2(Date fechaI, Date fechaF) throws RemoteException;
-    
+
+    public void soporte(String nombre, String mensaje,String fecha) throws RemoteException;
 }
