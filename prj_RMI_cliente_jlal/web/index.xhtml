@@ -30,24 +30,6 @@
             </ui:insert>
         </div>
         <h:body>
-            <h:form>      
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <div class ="panel" id="mainPnl" header="Inicio de Sesion" style="width: 30%; margin: auto; align-content: center;">
-                    <h:panelGrid columns="2">
-                        <h:outputLabel for="usuario" value="Usuario" />
-                        <h:inputText id="usuario" value="#{cls_usuario.nombre}" required="true" 
-                                     maxlength="15" requiredMessage="Debe ingresar el usuario" />
-                        <h:outputLabel for="clave" value="Contraseña" />
-                        <h:inputSecret id="clave" value="#{cls_usuario.contrasena}" required="true"  requiredMessage="Debe ingresar la contraseña"/>
-                    </h:panelGrid>
-
-                    <h:commandButton value="Aceptar" action="#{cls_usuario.login()}" style="align-self: center; margin-top: 10px;"/>
-                </div>
-            </h:form>
-
             <br />
         </h:body>
 

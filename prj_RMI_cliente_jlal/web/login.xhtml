@@ -34,8 +34,7 @@
                                  maxlength="15" requiredMessage="Debe ingresar el usuario" />
                     <h:outputLabel for="clave" value="Contraseña" />
                     <h:inputSecret id="clave" value="#{cls_usuario.contrasena}" required="true"  requiredMessage="Debe ingresar la contraseña"/>
-                </h:panelGrid>
-                
+                </h:panelGrid>         
                 <h:commandButton value="Aceptar" action="#{cls_usuario.login()}" style="align-self: center; margin-top: 10px;"/>
             </div>
         </h:form>

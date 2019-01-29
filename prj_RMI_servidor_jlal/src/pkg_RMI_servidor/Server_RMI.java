@@ -478,8 +478,8 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
     @Override
     public Usuario login(String nombre, String contrasena) throws RemoteException {
 
-        String sql = "SELECT u FROM usuario u WHERE u.NOMBRE=:cod AND u.CONTRASENA=:pass";
-        Query query = em1.createNativeQuery(sql).setParameter("cod", nombre).setParameter("pass", contrasena);
+        String sql = "SELECT * FROM usuario  WHERE NOMBRE='"+nombre+"' AND CONTRASENA='"+contrasena+"'";
+        Query query = em1.createNativeQuery(sql);
         List l1 = query.getResultList();
         String ls_nombre = "";
         String ls_contrasena = "";
@@ -494,8 +494,10 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
             e.setContrasena(ls_contrasena);
             e.setPermisos(ls_permisos);
             mensaje = "";
+            System.out.println("si");
         } else {
             mensaje = "No se encontro el usuario";
+            System.out.println("no");
         }
         return e;
     }

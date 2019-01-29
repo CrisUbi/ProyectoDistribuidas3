@@ -82,10 +82,11 @@
 
         </style>
         <header>
+            #{cls_usuario.menu()}
             <div id="header">
                 <ul class="nav">
                     <li><a href="faces/index.xhtml">Inicio</a></li>
-                    <li><a href="">Biblioteca</a>
+                    <li><a href="" style="#{cls_usuario.biblioteca}">Biblioteca</a>
                         <ul>
                             <li><a href="faces/autor.xhtml">Autor</a></li>
                             <li><a href="faces/libro.xhtml">Libro</a></li>
@@ -99,7 +100,7 @@
                             <li><a href="faces/reporteLC.xhtml">Reporte 2</a></li>      
                         </ul>
                     </li>
-                    <li><a href="">Contabilidad</a>
+                    <li><a href="" style="#{cls_usuario.cuenta}">Contabilidad</a>
                         <ul>
                             <li><a href="faces/cuenta.xhtml">Cuenta</a></li>
                             <li><a href="faces/tipocuenta.xhtml">Tipo de Cuenta</a></li>
@@ -108,7 +109,7 @@
                             <li><a href=""></a></li>      
                         </ul>
                     </li>
-                    <li><a href="">Activos</a>
+                    <li><a href="" style="#{cls_usuario.activo}">Activos</a>
                         <ul>
                             <li><a href="faces/Activo.xhtml">Activo</a></li>
                             <li><a href="faces/Actividad.xhtml">Actividad</a></li>
@@ -123,8 +124,9 @@
                         </ul>
                     </li>
                     <li><a href="http://localhost:8080/prj_RMI_cliente_jlal/faces/soporte.xhtml">Soporte</a></li>
-                    <li><a href="http://localhost:8080/prj_RMI_cliente_jlal/faces/Servidorchat.xhtml">ServidorChat</a></li>
-                    <li><a href="">Salir</a></li>
+                    <li><a href="http://localhost:8080/prj_RMI_cliente_jlal/faces/Servidorchat.xhtml" style="#{cls_usuario.admin}">ServidorChat</a></li>
+                    <li><a href="faces/usuario.xhtml" style="#{cls_usuario.admin}">Usuario</a></li>
+                    <li><a href="faces/login.xhtml"  >Salir</a></li>
                 </ul>
             </div>
         </header>
