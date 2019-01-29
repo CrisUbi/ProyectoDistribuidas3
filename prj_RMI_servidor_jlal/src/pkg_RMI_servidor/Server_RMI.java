@@ -1523,69 +1523,269 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
         return actividades;
     }
 
+    
     @Override
     public String insertarCabeceraComprobante(Date fechaCab, String observaciones) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String sql = "INSERT INTO cabecera_combropante (`FECHA_CABECERA`, `OBSERVACIONES`) \n"
+                + "	VALUES ('" + formatter.format(fechaCab) + "', '" + observaciones + "')";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
     }
 
     @Override
     public String modificarCabeceraComprobante(Integer numeroCab, Date fechaCab, String observaciones) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String sql = "UPDATE cabecera_comprobante SET `FECHA_CABECERA`='" + formatter.format(fechaCab) + "', `OBSERVACIONES`=" + "'" + observaciones + "'"
+                + "where NUMERO_PRESTAMO=" + numeroCab;
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se modifico satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo modificar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
     }
 
     @Override
     public String eliminarCabeceraComprobante(Integer numeroCab) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "delete from cabecera_comprobate where NUMERO_CABECERA=" + numeroCab + "";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            int li_filas = qe.executeUpdate();
+            if (li_filas >= 1) {
+                em1.getTransaction().commit();
+                mensaje = "Se eliminó satisfactoriamente";
+            }
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo eliminar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
     }
 
     @Override
     public pkg_interface.CabeceraComprobante CabeceraComprobante(Integer numero) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "SELECT * FROM cabecera_comprobante where NUMERO_CABEREA=" + numero + "";
+        Query qe = em1.createNativeQuery(sql);
+        List l1 = qe.getResultList();
+        Date fechaP = null;
+        String descripcion;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        pkg_interface.CabeceraComprobante e = new pkg_interface.CabeceraComprobante();
+        if (l1.size() >= 1) {
+            Object[] ar_objeto = (Object[]) (l1.get(0));
+            try {
+                fechaP = formatter.parse(ar_objeto[1].toString());
+            } catch (ParseException ex) {
+                Logger.getLogger(Server_RMI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            descripcion = ar_objeto[2].toString();
+            e.setFechaCabecera(fechaP);
+            e.setObservaciones(descripcion);
+            mensaje = "";
+        } else {
+            mensaje = "No se encontro el Autor";
+        }
+        return e;
     }
 
     @Override
     public ArrayList<pkg_interface.CabeceraComprobante> CabecerasComp() throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         String sql = "SELECT * FROM cabecera_comprobante";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<pkg_interface.CabeceraComprobante> cabecera = null;
+        if (l1.size() >= 1) {
+            ArrayList<pkg_interface.CabeceraComprobante> al = new ArrayList();
+            for (Object[] row : l1) {
+                pkg_interface.CabeceraComprobante al1 = new pkg_interface.CabeceraComprobante();
+                al1.setNumeroCabecera((Integer) row[0]);
+                al1.setFechaCabecera((Date) row[1]);
+                al1.setObservaciones((String) row[2]);
+                al.add(al1);
+            }
+            mensaje = "";
+            cabecera = al;
+
+        } else {
+            mensaje = "No se encontro cabeceras";
+        }
+        return cabecera;
     }
 
     @Override
     public String insertarDetalleComprobante(Integer numeroD, Integer cantidadHaber, Integer cantidadDebe, Integer numeroCab, Integer codigoCuenta) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "INSERT INTO detalle_comprobante (`CODIGO_D_DETALLE`, `CANTIDAD_DEBE`, `CANTIDAD_HABER`) \n"
+                + "	VALUES (" + numeroD + "," + cantidadHaber + "," + cantidadDebe + ")";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
     }
 
     @Override
     public String modificarDetalleComprobante(Integer numeroD, Integer cantidadHaber, Integer cantidadDebe, Integer numeroCab, Integer codigoCuenta) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String sql = "UPDATE detalle_comprobante SET `CANTIDAD_DEBE`=" + cantidadDebe + ",`CANTIDAD_HABER`="+cantidadHaber+" where NUMERO_PRESTAMO=" + numeroD + "";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se modifico satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo modificar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
     }
 
     @Override
     public String eliminarDetalleComprobante(Integer numeroD) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         String sql = "delete from detalle_comprobante where CODIGO_D_DETALLE=" + numeroD + "";
+        System.out.println(sql);
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            int li_filas = qe.executeUpdate();
+            if (li_filas >= 1) {
+                em1.getTransaction().commit();
+                mensaje = "Se eliminó satisfactoriamente";
+            }
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo eliminar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
     }
 
     @Override
     public DetalleComprobante detalleComprobante(Integer numero, Integer codigoCuenta) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         String sql = "SELECT * FROM detalle_cuda where NUMERO_PRESTAMO=" + numero ;
+        Query qe = em1.createNativeQuery(sql);
+        List l1 = qe.getResultList();
+        Integer cantidadD;
+        Integer cantidadH;
+        pkg_interface.DetalleComprobante e = new pkg_interface.DetalleComprobante();
+        if (l1.size() >= 1) {
+            Object[] ar_objeto = (Object[]) (l1.get(0));
+            e.setCantidadDebe((BigDecimal) ar_objeto[2]);
+            e.setCantidadDebe((BigDecimal) ar_objeto[3]);
+            mensaje = "";
+        } else {
+            mensaje = "No se encontro el Autor";
+        }
+        return e;
     }
 
     @Override
     public ArrayList<DetalleComprobante> DetallesComp() throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String sql = "SELECT * FROM detalle_comprobante";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<DetalleComprobante> detalles = null;
+        if (l1.size() >= 1) {
+            ArrayList<DetalleComprobante> al = new ArrayList();
+            for (Object[] row : l1) {
+                DetalleComprobante al1 = new DetalleComprobante();
+                al1.setCantidadDebe((BigDecimal) row[2]);
+                al1.setCantidadHaber((BigDecimal) row[3]);
+                al.add(al1);
+            }
+            mensaje = "";
+            detalles = al;
+
+        } else {
+            mensaje = "No se encontro detalles";
+        }
+        return detalles;
     }
 
     @Override
     public ArrayList<DetalleComprobante> DetallesComprobante(Integer numero) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "SELECT * FROM detalle_comprobante where codigo_d_detalle=" + numero;
+        System.out.println(sql);
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<DetalleComprobante> detalles = null;
+        if (l1.size() >= 1) {
+            ArrayList<DetalleComprobante> al = new ArrayList();
+            for (Object[] row : l1) {
+                DetalleComprobante al1 = new DetalleComprobante();
+                al1.setCodigoDDetalle(((BigDecimal) row[0]).intValue());
+                al1.setCantidadDebe((BigDecimal) row[1]);
+                al1.setCantidadHaber((BigDecimal) row[2]);
+                al.add(al1);
+            }
+            mensaje = "";
+            detalles = al;
+        } else {
+            mensaje = "No se encontro detalles";
+        }
+        return detalles;
     }
 
     @Override
     public ArrayList<pkg_interface.CabeceraComprobante> reporteCabeceraComprobante(Date fechaI, Date fechaF) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        String sql = "SELECT C.FECHAENTREGA_PRESTAMO , sum(d.CANTIDAD) FROM cabecera_cuda C INNER JOIN detalle_cuda d on "
+                + "d.NUMERO_PRESTAMO = C.NUMERO_PRESTAMO where C.FECHAENTREGA_PRESTAMO BETWEEN '" + formatter.format(fechaI) + "' "
+                + "AND '" + formatter.format(fechaF) + "' GROUP BY `C`.`FECHAENTREGA_PRESTAMO` ASC";
+        Query query = em1.createNativeQuery(sql);
+        System.out.println(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<pkg_interface.CabeceraComprobante> cabecera = null;
+        if (l1.size() >= 1) {
+            ArrayList<pkg_interface.CabeceraComprobante> al = new ArrayList();
+            for (Object[] row : l1) {
+                CabeceraComprobante al1 = new CabeceraComprobante();
+//                al1.setNumeroPrestamo(((BigDecimal) row[1]).intValue());
+//                al1.setFechaPrestamo((Date) row[0]);
+//                al.add(al1);
+            }
+            mensaje = "";
+            cabecera = al;
+
+        } else {
+            mensaje = "No se encontro cabeceras";
+        }
+        return cabecera;
     }
 
     @Override
     public ArrayList<DetalleComprobante> reporteDetalle(Date fechaI, Date fechaF) throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }
