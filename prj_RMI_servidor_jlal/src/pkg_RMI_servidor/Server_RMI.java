@@ -28,6 +28,7 @@ import pkg_interface.LibroCuda;
 import pkg_interface.Usuario;
 import pkg_interface.cls_interface;
 import pkg_interface.Cuenta;
+import pkg_interface.DetalleComprobante;
 import pkg_interface.DetalleCuda;
 import pkg_interface.DetalleMantenimientoJlal;
 import pkg_interface.MantenimientoJlal;
@@ -1518,6 +1519,71 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
         }
 
         return actividades;
+    }
+
+    @Override
+    public String insertarCabeceraComprobante(Date fechaCab, String observaciones) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String modificarCabeceraComprobante(Integer numeroCab, Date fechaCab, String observaciones) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String eliminarCabeceraComprobante(Integer numeroCab) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public pkg_interface.CabeceraComprobante CabeceraComprobante(Integer numero) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<pkg_interface.CabeceraComprobante> CabecerasComp() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String insertarDetalleComprobante(Integer numeroD, Integer cantidadHaber, Integer cantidadDebe, Integer numeroCab, Integer codigoCuenta) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String modificarDetalleComprobante(Integer numeroD, Integer cantidadHaber, Integer cantidadDebe, Integer numeroCab, Integer codigoCuenta) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String eliminarDetalleComprobante(Integer numeroD) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DetalleComprobante detalleComprobante(Integer numero, Integer codigoCuenta) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<DetalleComprobante> DetallesComp() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<DetalleComprobante> DetallesComprobante(Integer numero) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<pkg_interface.CabeceraComprobante> reporteCabeceraComprobante(Date fechaI, Date fechaF) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<DetalleComprobante> reporteDetalle(Date fechaI, Date fechaF) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

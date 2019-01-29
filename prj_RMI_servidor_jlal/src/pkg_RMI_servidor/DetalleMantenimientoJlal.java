@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pkg_interface;
+package pkg_RMI_servidor;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
