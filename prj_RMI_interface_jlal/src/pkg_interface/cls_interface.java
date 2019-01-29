@@ -129,6 +129,7 @@ public interface cls_interface extends Remote {
 
     public ArrayList<DetalleMantenimientoJlal> buscarDetalleM() throws RemoteException;
     
+    public ArrayList<DetalleMantenimientoJlal> ReporteM1() throws RemoteException;
     
     public String insertarMante(Integer numeroMantenimiento,Date fechaMantenimiento, String responsableMantenimiento) throws RemoteException;
 

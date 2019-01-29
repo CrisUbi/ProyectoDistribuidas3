@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="x-ua-compatible" content="ie=edge"></meta>
+        <title>Actividades</title>
+        <meta name="description" content=""></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"></link>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css"></link>
+        <link href="css/bootstrap.min.css" rel="stylesheet"></link>
+        <link href="css/bootstrap-datepicker.css" rel="stylesheet"></link>
+        <link href="css/style_nav.css" rel="stylesheet"></link>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+        <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet"></link>
+        <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet"></link>
+        <link href="style.css" rel="stylesheet"></link>
+        <div id="header">
+            <ui:insert name="header">
+                <ui:include src="menu.xhtml" />
+            </ui:insert>
+        </div>
+        <script>$(document).ready(function () {
+                $('#example').DataTable();
+            });</script>
+    </h:head>
+    <h:body>
+
+        <div class="container">
+            <header class="page-header">
+                <div class="branding">
+                    <br></br>
+                    <h1>ACTIVIDADES</h1>
+                </div>
+            </header>
+
+        </div>
+        <template id="actividad-list"></template>
+
+        <h:form id="form1">
+            <h1>#{cls_reporte_cruzado.mensaje}</h1>
+            <div class="container">
+
+                <table  id="example" class="display" style="width:100%"> 
+                    <thead>
+                        <tr>
+                            <th>Codigo de Actividad</th>
+                            <th>Total Gastado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <ui:repeat value="#{cls_detalle_mantenimiento.busca1}" var="actividad"> 
+                            <tr> 
+                                <td>#{actividad.codigoActividad}</td> 
+                                <td>#{actividad.valorDMantenimiento}</td> 
+
+                            </tr> 
+                        </ui:repeat> 
+                    </tbody>
+                </table> 
+            </div>
+        </h:form>
+    </h:body>
+    <footer><object type="text/html" data="http://localhost:8080/prj_chat_websocket/" width="1000" height="500" name="contenido"></object></footer>
+</html>

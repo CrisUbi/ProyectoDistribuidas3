@@ -1494,4 +1494,30 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
         return actividades;
     }
 
+    @Override
+    public ArrayList<DetalleMantenimientoJlal> ReporteM1() throws RemoteException {
+        String sql = "SELECT CODIGO_ACTIVIDAD,SUM(VALOR_D_MANTENIMIENTO) FROM sys.detalle_mantenimiento_jlal group by CODIGO_ACTIVIDAD  ";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<DetalleMantenimientoJlal> actividades = null;
+        if (l1.size() >= 1) {
+            ArrayList<DetalleMantenimientoJlal> al = new ArrayList();
+            for (Object[] row : l1) {
+                DetalleMantenimientoJlal al1 = new DetalleMantenimientoJlal();
+                al1.setCodigoActividad((Integer) row[0]);
+                al1.setValorDMantenimiento(((BigDecimal) row[1]).intValue());
+                al1.setCodigoActivo(0);
+                al1.setNumeroMantenimiento(0);
+                al.add(al1);
+            }
+            mensaje = "";
+            actividades = al;
+
+        } else {
+            mensaje = "No se encontro el PROVEEDOR";
+        }
+
+        return actividades;
+    }
+
 }

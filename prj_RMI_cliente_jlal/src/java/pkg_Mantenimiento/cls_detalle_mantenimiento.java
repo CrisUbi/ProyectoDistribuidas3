@@ -37,9 +37,18 @@ public class cls_detalle_mantenimiento implements Serializable {
     Integer valorDMantenimiento;
     String mensaje;
     ArrayList<DetalleMantenimientoJlal> busca ;
+    ArrayList<DetalleMantenimientoJlal> busca1 ;
 ArrayList<Integer> lcodigoActividad;
     ArrayList<Integer> lcodigoActivo;
     ArrayList<Integer> lnumeroMantenimiento;
+
+    public ArrayList<DetalleMantenimientoJlal> getBusca1() {
+        return busca1;
+    }
+
+    public void setBusca1(ArrayList<DetalleMantenimientoJlal> busca1) {
+        this.busca1 = busca1;
+    }
     
 
     public Integer getNumeroMantenimiento() {
@@ -102,6 +111,7 @@ ArrayList<Integer> lcodigoActividad;
         public cls_detalle_mantenimiento ()
     {
         buscartabla();
+        buscarreporte();
     }
     public void buscar()
     { 
@@ -171,6 +181,21 @@ ArrayList<Integer> lcodigoActividad;
         }
         System.out.println(mensaje);
       }
+    public void  buscarreporte()
+    { 
+    busca1= null;
+        try
+        {Registry registro=LocateRegistry.getRegistry("127.0.0.1",1095);
+        cls_interface interface1=(cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
+        busca1=interface1.ReporteM1();
+         mensaje="Tabla encontrada";
+        }
+        catch(RemoteException | NotBoundException ex)
+        { System.out.println("error");
+        mensaje="No encontro Tabla";
+        }
+        System.out.println(mensaje);
+      }
     
      public void insertar()
     { 
@@ -185,6 +210,7 @@ ArrayList<Integer> lcodigoActividad;
         mensaje="No se pudo insertar";
         }
         buscartabla();
+         buscarreporte();
         System.out.println(mensaje);
       }
       public void eliminar()
@@ -200,6 +226,7 @@ ArrayList<Integer> lcodigoActividad;
         mensaje="No se pudo insertar";
         }
         buscartabla();
+         buscarreporte();
         System.out.println(mensaje);
       }
        public void modificar()
@@ -215,6 +242,7 @@ ArrayList<Integer> lcodigoActividad;
         mensaje="No se pudo insertar";
         }
         buscartabla();
+         buscarreporte();
         System.out.println(mensaje);
       }
 }
