@@ -29,6 +29,8 @@ import pkg_interface.Usuario;
 import pkg_interface.cls_interface;
 import pkg_interface.Cuenta;
 import pkg_interface.DetalleCuda;
+import pkg_interface.DetalleMantenimientoJlal;
+import pkg_interface.MantenimientoJlal;
 import pkg_interface.TipoCuenta;
 
 /**
@@ -40,7 +42,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
     public String mensaje = "";
     EntityManagerFactory factory = Persistence.createEntityManagerFactory("prj_RMI_servidorPU");
     EntityManager em1 = factory.createEntityManager();
-
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
     public Server_RMI() throws RemoteException {
         super();
     }
@@ -80,7 +82,6 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
             mensaje = "No se encontro el PROVEEDOR";
         }
         System.out.println("Actividad:" + ls_nombre + "");
-
         return e;
     }
 
@@ -1234,7 +1235,7 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
 
     @Override
     public ArrayList<AutorCuda> reporte2(Date fechaI, Date fechaF) throws RemoteException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        
         String sql = " SELECT l.ISBN_LIBRO , l.TITULO_LIBRO , l.CANTIDAD_LIBRO ,a.CODIGO_AUTOR,a.NOMBRE_AUTOR,a.APELLIDO_AUTOR\n"
                 + "FROM libro_cuda l \n"
                 + "INNER JOIN autor_cuda a on a.CODIGO_AUTOR = l.CODIGO_AUTOR \n"
@@ -1281,6 +1282,216 @@ public class Server_RMI extends UnicastRemoteObject implements cls_interface {
         em1.close();
         factory.close();
 
+    }
+
+    @Override
+    public String insertarDetalleM(Integer codigoActividad, Integer codigoActivo, Integer numeroMantenimiento, Integer valorDMantenimiento) throws RemoteException {
+        String sql = "INSERT INTO sys.detalle_mantenimiento_jlal (`CODIGO_ACTIVIDAD`, `CODIGO_ACTIVO`, `NUMERO_MANTENIMIENTO`, `VALOR_D_MANTENIMIENTO`) \n" +
+"	VALUES ("+codigoActividad+", "+codigoActivo+","+numeroMantenimiento+"," +valorDMantenimiento+")";
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String eliminarDetalleM(Integer codigoActividad, Integer codigoActivo, Integer numeroMantenimiento) throws RemoteException {
+        
+        
+        String sql = "DELETE FROM `sys`.`detalle_mantenimiento_jlal` WHERE (`CODIGO_ACTIVIDAD` = '"+codigoActividad+"') and (`CODIGO_ACTIVO` = '"+codigoActivo+"') and (`NUMERO_MANTENIMIENTO` = '"+numeroMantenimiento+"')";
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String modificarDetalleM(Integer codigoActividad, Integer codigoActivo, Integer numeroMantenimiento, Integer valorDMantenimiento) throws RemoteException {
+        String sql = "UPDATE `sys`.`detalle_mantenimiento_jlal` SET `VALOR_D_MANTENIMIENTO` = '"+valorDMantenimiento+"' WHERE (`CODIGO_ACTIVIDAD` = '"+codigoActividad+"') and (`CODIGO_ACTIVO` = '"+codigoActivo+"') and (`NUMERO_MANTENIMIENTO` = '"+numeroMantenimiento+"')";
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public DetalleMantenimientoJlal buscarDetalleM(Integer codigoActividad, Integer codigoActivo, Integer numeroMantenimiento) throws RemoteException {
+         String sql = "SELECT * FROM sys.detalle_mantenimiento_jlal WHERE (`CODIGO_ACTIVIDAD` = '"+codigoActividad+"') and (`CODIGO_ACTIVO` = '"+codigoActivo+"') and (`NUMERO_MANTENIMIENTO` = '"+numeroMantenimiento+"')";
+        Query qe = em1.createNativeQuery(sql);
+        List l1 = qe.getResultList();
+        Integer ls_nombre = 0;
+        DetalleMantenimientoJlal e = new DetalleMantenimientoJlal();
+        if (l1.size() >= 1) {
+            Object[] ar_objeto = (Object[]) (l1.get(0));
+            ls_nombre = ((BigDecimal) ar_objeto[3]).intValue() ;
+            e.setValorDMantenimiento(ls_nombre);
+            e.setCodigoActividad(codigoActividad);
+            e.setCodigoActivo(codigoActivo);
+            e.setNumeroMantenimiento(numeroMantenimiento);
+
+            mensaje = "";
+        } else {
+            mensaje = "No se encontro el PROVEEDOR";
+        }
+        System.out.println("Actividad:" + ls_nombre + "");
+
+        return e;
+    }
+
+    @Override
+    public ArrayList<DetalleMantenimientoJlal> buscarDetalleM() throws RemoteException {
+        String sql = "SELECT * FROM sys.detalle_mantenimiento_jlal ";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<DetalleMantenimientoJlal> actividades = null;
+        if (l1.size() >= 1) {
+            ArrayList<DetalleMantenimientoJlal> al = new ArrayList();
+            for (Object[] row : l1) {
+                DetalleMantenimientoJlal al1 = new DetalleMantenimientoJlal();
+                al1.setCodigoActividad((Integer) row[0]);
+                al1.setCodigoActivo((Integer) row[1]);
+                al1.setNumeroMantenimiento((Integer) row[2]);
+                al1.setValorDMantenimiento(((BigDecimal) row[3]).intValue());
+                al.add(al1);
+            }
+            mensaje = "";
+            actividades = al;
+
+        } else {
+            mensaje = "No se encontro el PROVEEDOR";
+        }
+
+        return actividades;
+    }
+
+    @Override
+    public String insertarMante(Integer numeroMantenimiento, Date fechaMantenimiento, String responsableMantenimiento) throws RemoteException {
+       
+        String sql = "INSERT INTO `sys`.`mantenimiento_jlal` (`NUMERO_MANTENIMIENTO`, `FECHA_MANTENIMIENTO`, `RESPONSABLE_MANTENIMIENTO`) VALUES ('"+numeroMantenimiento+"', '"+formatter.format(fechaMantenimiento)+"', '"+responsableMantenimiento+"')";
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String eliminarMante(Integer numeroMantenimiento) throws RemoteException {
+          String sql = "DELETE FROM `sys`.`mantenimiento_jlal` WHERE (`NUMERO_MANTENIMIENTO` = '"+numeroMantenimiento+"')";
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String modificarMante(Integer numeroMantenimiento, Date fechaMantenimiento, String responsableMantenimiento) throws RemoteException {
+        String sql = "UPDATE `sys`.`mantenimiento_jlal` SET `FECHA_MANTENIMIENTO` = '"+formatter.format(fechaMantenimiento)+"', `RESPONSABLE_MANTENIMIENTO` = '"+responsableMantenimiento+"' WHERE (`NUMERO_MANTENIMIENTO` = '"+numeroMantenimiento+"')";
+        em1.getTransaction().begin();
+        Query qe = em1.createNativeQuery(sql);
+        try {
+            qe.executeUpdate();
+            em1.getTransaction().commit();
+            mensaje = "Se insertó satisfactoriamente";
+        } catch (Exception ex) {
+            em1.getTransaction().rollback();
+            mensaje = "No se pudo insertar";
+        }
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public MantenimientoJlal buscarActivoMante(Integer numeroMantenimiento) throws RemoteException {
+        String sql = "SELECT * FROM sys.mantenimiento_jlal WHERE (`NUMERO_MANTENIMIENTO` = '"+numeroMantenimiento+"')";
+        Query qe = em1.createNativeQuery(sql);
+        List l1 = qe.getResultList();
+        String ls_nombre = "";
+        MantenimientoJlal e = new MantenimientoJlal();
+        if (l1.size() >= 1) {
+            Object[] ar_objeto = (Object[]) (l1.get(0));
+            ls_nombre = ar_objeto[2].toString();
+            e.setResponsableMantenimiento(ls_nombre);
+            e.setNumeroMantenimiento(numeroMantenimiento);
+            
+            e.setFechaMantenimiento((Date)ar_objeto[1]);
+            
+
+            mensaje = "";
+        } else {
+            mensaje = "No se encontro el PROVEEDOR";
+        }
+        System.out.println("Actividad:" + ls_nombre + "");
+
+        return e;
+    }
+
+    @Override
+    public ArrayList<MantenimientoJlal> buscarMante() throws RemoteException {
+        String sql = "SELECT * FROM mantenimiento_jlal ";
+        Query query = em1.createNativeQuery(sql);
+        List<Object[]> l1 = query.getResultList();
+        ArrayList<MantenimientoJlal> actividades = null;
+        if (l1.size() >= 1) {
+            ArrayList<MantenimientoJlal> al = new ArrayList();
+            for (Object[] row : l1) {
+                MantenimientoJlal al1 = new MantenimientoJlal();
+                
+             
+            
+            al1.setResponsableMantenimiento(row[2].toString());
+            al1.setNumeroMantenimiento((Integer) row[0]);
+                al1.setFechaMantenimiento((Date)row[1]);
+            
+                al.add(al1);
+            }
+            mensaje = "";
+            actividades = al;
+
+        } else {
+            mensaje = "No se encontro el PROVEEDOR";
+        }
+
+        return actividades;
     }
 
 }

@@ -318,5 +318,57 @@ public class implementacion_RMI extends UnicastRemoteObject implements cls_inter
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public String insertarDetalleM(Integer codigoActividad, Integer codigoActivo, Integer numeroMantenimiento, Integer valorDMantenimiento) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String eliminarDetalleM(Integer codigoActividad, Integer codigoActivo, Integer numeroMantenimiento) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+
+    @Override
+    public DetalleMantenimientoJlal buscarDetalleM(Integer codigoActividad, Integer codigoActivo, Integer numeroMantenimiento) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<DetalleMantenimientoJlal> buscarDetalleM() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String insertarMante(Integer numeroMantenimiento, Date fechaMantenimiento, String responsableMantenimiento) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String eliminarMante(Integer numeroMantenimiento) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String modificarMante(Integer numeroMantenimiento, Date fechaMantenimiento, String responsableMantenimiento) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public MantenimientoJlal buscarActivoMante(Integer numeroMantenimiento) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<MantenimientoJlal> buscarMante() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String modificarDetalleM(Integer codigoActividad, Integer codigoActivo, Integer numeroMantenimiento, Integer valorDMantenimiento) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
  
 }

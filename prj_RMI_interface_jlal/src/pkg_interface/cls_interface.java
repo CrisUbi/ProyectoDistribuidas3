@@ -118,4 +118,25 @@ public interface cls_interface extends Remote {
     public ArrayList<AutorCuda> reporte2(Date fechaI, Date fechaF) throws RemoteException;
 
     public void soporte(String nombre, String mensaje,String fecha) throws RemoteException;
+    
+    public String insertarDetalleM(Integer codigoActividad,Integer codigoActivo, Integer numeroMantenimiento,Integer valorDMantenimiento) throws RemoteException;
+
+    public String eliminarDetalleM(Integer codigoActividad,Integer codigoActivo, Integer numeroMantenimiento) throws RemoteException;
+
+    public String modificarDetalleM(Integer codigoActividad,Integer codigoActivo, Integer numeroMantenimiento,Integer valorDMantenimiento) throws RemoteException;
+
+    public DetalleMantenimientoJlal buscarDetalleM(Integer codigoActividad,Integer codigoActivo, Integer numeroMantenimiento) throws RemoteException;
+
+    public ArrayList<DetalleMantenimientoJlal> buscarDetalleM() throws RemoteException;
+    
+    
+    public String insertarMante(Integer numeroMantenimiento,Date fechaMantenimiento, String responsableMantenimiento) throws RemoteException;
+
+    public String eliminarMante(Integer numeroMantenimiento) throws RemoteException;
+
+    public String modificarMante(Integer numeroMantenimiento,Date fechaMantenimiento, String responsableMantenimiento) throws RemoteException;
+
+    public MantenimientoJlal buscarActivoMante(Integer numeroMantenimiento) throws RemoteException;
+
+    public ArrayList<MantenimientoJlal> buscarMante() throws RemoteException;
 }

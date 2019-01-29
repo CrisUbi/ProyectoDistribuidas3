@@ -1,36 +1,74 @@
-package pkg_RMI_cliente;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pkg_Mantenimiento;
+
+import pkg_Biblioteca.*;
+import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import javax.faces.bean.SessionScoped;
+import java.util.Date;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
-import pkg_interface.ActividadJlal;
+import javax.faces.bean.SessionScoped;
+import pkg_interface.DetalleMantenimientoJlal;
+import pkg_interface.MantenimientoJlal;
+
 import pkg_interface.cls_interface;
 
-
+/**
+ *
+ * @author crist
+ */
 @ManagedBean()
 @SessionScoped
+public class cls_cabecera_Mantenimiento implements Serializable {
 
-public final class cls_RMI_cliente {
-    Integer cedula;
-    String  apellido;
- 
+    
+   Integer numeroMantenimiento;
+   Date fechaMantenimiento =new Date();
+ String responsableMantenimiento;
     String mensaje;
-    ArrayList<ActividadJlal> busca ;
+    ArrayList<MantenimientoJlal> busca ;
 
-    public ArrayList<ActividadJlal> getBusca() {
+    public ArrayList<MantenimientoJlal> getBusca() {
         return busca;
     }
 
-    public void setBusca(ArrayList<ActividadJlal> busca) {
+    public void setBusca(ArrayList<MantenimientoJlal> busca) {
         this.busca = busca;
     }
 
-    public Integer getCedula() {
-        return cedula;
+    public Integer getNumeroMantenimiento() {
+        return numeroMantenimiento;
     }
+
+    public void setNumeroMantenimiento(Integer numeroMantenimiento) {
+        this.numeroMantenimiento = numeroMantenimiento;
+    }
+
+    public Date getFechaMantenimiento() {
+        return fechaMantenimiento;
+    }
+
+    public void setFechaMantenimiento(Date fechaMantenimiento) {
+        this.fechaMantenimiento = fechaMantenimiento;
+    }
+
+    public String getResponsableMantenimiento() {
+        return responsableMantenimiento;
+    }
+
+    public void setResponsableMantenimiento(String responsableMantenimiento) {
+        this.responsableMantenimiento = responsableMantenimiento;
+    }
+
+    
 
     public String getMensaje() {
         return mensaje;
@@ -40,22 +78,12 @@ public final class cls_RMI_cliente {
         this.mensaje = mensaje;
     }
 
-    public void setCedula(Integer cedula) {
-        this.cedula = cedula;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+   
 
    
     
     
-        public cls_RMI_cliente ()
+        public cls_cabecera_Mantenimiento ()
     {
         buscartabla();
     }
@@ -64,17 +92,18 @@ public final class cls_RMI_cliente {
         try
         {Registry registro=LocateRegistry.getRegistry("127.0.0.1",1095);
         cls_interface interface1=(cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
-        ActividadJlal busca=interface1.buscar(cedula);
+        MantenimientoJlal busca=interface1.buscarActivoMante(numeroMantenimiento);
         
-        apellido=busca.getNombreActividad();
-    
-    mensaje="Encontro Dato";
+        fechaMantenimiento=busca.getFechaMantenimiento();
+        responsableMantenimiento=busca.getResponsableMantenimiento();
+        mensaje="Encontro Dato";
         }
         catch(RemoteException | NotBoundException ex)
         { System.out.println("error");
         mensaje="No encontro Dato";
         }
         System.out.println(mensaje);
+         buscartabla();
       }
     public void  buscartabla()
     { 
@@ -82,7 +111,7 @@ public final class cls_RMI_cliente {
         try
         {Registry registro=LocateRegistry.getRegistry("127.0.0.1",1095);
         cls_interface interface1=(cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
-        busca=interface1.buscar();
+        busca=interface1.buscarMante();
          mensaje="Tabla encontrada";
         }
         catch(RemoteException | NotBoundException ex)
@@ -97,7 +126,7 @@ public final class cls_RMI_cliente {
         try
         {Registry registro=LocateRegistry.getRegistry("127.0.0.1",1095);
         cls_interface interface1=(cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
-        interface1.insertar(cedula, apellido);
+        interface1.insertarMante(numeroMantenimiento, fechaMantenimiento, responsableMantenimiento);
         mensaje="Inserto Correctamente";
         }
         catch(RemoteException | NotBoundException ex)
@@ -112,7 +141,7 @@ public final class cls_RMI_cliente {
         try
         {Registry registro=LocateRegistry.getRegistry("127.0.0.1",1095);
         cls_interface interface1=(cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
-        interface1.eliminar(cedula);
+        interface1.eliminarMante(numeroMantenimiento);
         mensaje="Inserto Correctamente";
         }
         catch(RemoteException | NotBoundException ex)
@@ -127,7 +156,7 @@ public final class cls_RMI_cliente {
         try
         {Registry registro=LocateRegistry.getRegistry("127.0.0.1",1095);
         cls_interface interface1=(cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
-        interface1.modificar(cedula, apellido);
+        interface1.modificarMante(numeroMantenimiento, fechaMantenimiento, responsableMantenimiento);
         mensaje="Inserto Correctamente";
         }
         catch(RemoteException | NotBoundException ex)
@@ -137,6 +166,4 @@ public final class cls_RMI_cliente {
         buscartabla();
         System.out.println(mensaje);
       }
-     
 }
-
