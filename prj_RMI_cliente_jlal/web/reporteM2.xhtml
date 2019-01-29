@@ -37,7 +37,7 @@
             <header class="page-header">
                 <div class="branding">
                     <br></br>
-                    <h1>ACTIVIDADES</h1>
+                    <h1>Tabla Cruzada</h1>
                 </div>
             </header>
 
@@ -45,23 +45,19 @@
         <template id="actividad-list"></template>
 
         <h:form id="form1">
-            <h1>#{cls_reporte_cruzado.mensaje}</h1>
+            <h1></h1>
+            #{cls_reporte_cruzado.buscarTabla()}
             <div class="container">
 
                 <table  id="example" class="display" style="width:100%"> 
-                    <thead>
-                        <tr>
-                            <th>Codigo de Actividad</th>
-                            <th>Total Gastado</th>
-                        </tr>
-                    </thead>
+                    
                     <tbody>
                         
-                        <ui:repeat value="#{cls_detalle_mantenimiento.busca1}" var="actividad"> 
+                        <ui:repeat value="#{cls_reporte_cruzado.nombre}" var="actividad"> 
                             <tr> 
-                                <td>#{actividad.codigoActividad}</td> 
-                                <td>#{actividad.valorDMantenimiento}</td> 
-
+                            <ui:repeat value="#{actividad}" var="nombre"> 
+                                <td>#{nombre}</td> 
+                           </ui:repeat> 
                             </tr> 
                         </ui:repeat> 
                     </tbody>

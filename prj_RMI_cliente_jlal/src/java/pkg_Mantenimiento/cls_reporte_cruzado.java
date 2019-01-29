@@ -35,9 +35,18 @@ public class cls_reporte_cruzado implements Serializable {
     ArrayList<ActividadJlal> actividad;
     ArrayList<DetalleMantenimientoJlal> mantenimiento;
     String mensaje = "";
+    ArrayList<ArrayList<String>> nombre= new ArrayList();
 
     public cls_reporte_cruzado() {
         buscarTabla();
+    }
+
+    public ArrayList<ArrayList<String>> getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(ArrayList<ArrayList<String>> nombre) {
+        this.nombre = nombre;
     }
 
     public ArrayList<ActivoJlal> getActivo() {
@@ -86,46 +95,83 @@ public class cls_reporte_cruzado implements Serializable {
         }
         System.out.println(mensaje);
     }
-    public void  buscarActivo()
-    { 
-    activo= null;
-        try
-        {Registry registro=LocateRegistry.getRegistry("127.0.0.1",1095);
-        cls_interface interface1=(cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
-        activo=interface1.buscarActivo();
-         mensaje="Tabla encontrada";
-        }
-        catch(RemoteException | NotBoundException ex)
-        { System.out.println("error");
-        mensaje="No encontro Tabla";
-        }
-        System.out.println(mensaje);
-      }
-    public void  buscarActividad()
-    { 
-    actividad= null;
-        try
-        {Registry registro=LocateRegistry.getRegistry("127.0.0.1",1095);
-        cls_interface interface1=(cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
-        actividad=interface1.buscar();
-         mensaje="Tabla encontrada";
-        }
-        catch(RemoteException | NotBoundException ex)
-        { System.out.println("error");
-        mensaje="No encontro Tabla";
+
+    public void buscarActivo() {
+        activo = null;
+        try {
+            Registry registro = LocateRegistry.getRegistry("127.0.0.1", 1095);
+            cls_interface interface1 = (cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
+            activo = interface1.buscarActivo();
+            mensaje = "Tabla encontrada";
+        } catch (RemoteException | NotBoundException ex) {
+            System.out.println("error");
+            mensaje = "No encontro Tabla";
         }
         System.out.println(mensaje);
-      }
-    public void  buscarTabla()
-    { 
+    }
+
+    public void buscarActividad() {
+        actividad = null;
+        try {
+            Registry registro = LocateRegistry.getRegistry("127.0.0.1", 1095);
+            cls_interface interface1 = (cls_interface) registro.lookup("rmi://localhost:1095/RMI_interface");
+            actividad = interface1.buscar();
+            mensaje = "Tabla encontrada";
+        } catch (RemoteException | NotBoundException ex) {
+            System.out.println("error");
+            mensaje = "No encontro Tabla";
+        }
+        System.out.println(mensaje);
+    }
+
+    public void buscarTabla() {
         buscarActividad();
         buscarActivo();
         buscarmantenimiento();
-        ArrayList<ActivoJlal> activo1=new ArrayList();
-    ArrayList<ActividadJlal> actividad1=new ArrayList();
-    ArrayList<DetalleMantenimientoJlal> mantenimiento1=new ArrayList();
-    mensaje="hola</br>";
-        
+        ArrayList<ActivoJlal> activo1 = new ArrayList();
+        ArrayList<ActividadJlal> actividad1 = new ArrayList();
+        ArrayList<DetalleMantenimientoJlal> mantenimiento1 = new ArrayList();
+        mensaje = "actividad";
+
+        for (int i = 0; activo.size() > i; i++) {
+            mensaje += "," + activo.get(i).getNombreActivo();
+
+        }
+        mensaje += ":";
+        for (int i = 0; actividad.size() > i; i++) {
+            mensaje += actividad.get(i).getNombreActividad();
+
+            for (int j = 0; activo.size() > j; j++) {
+                int total = 0;
+                int cad = actividad.get(i).getCodigoActividad();
+                int cao = activo.get(j).getCodigoActivo();
+                for (int k = 0; mantenimiento.size() > k; k++) {
+                    int cad1 = mantenimiento.get(k).getCodigoActividad();
+                    int cao1 = mantenimiento.get(k).getCodigoActivo();
+                    if (cad1 == cad) {
+                        if (cao1 == cao) {
+                            total += mantenimiento.get(k).getValorDMantenimiento();
+                        }
+                    }
+                }
+                mensaje += "," + total;
+            }
+            mensaje += ":";
+
+        }
+        ArrayList<ArrayList<String>> nombres= new ArrayList();
+        String[] n1 = mensaje.split(":");
+        for (int i = 0; i < n1.length; i++) {
+            String[] n2 = n1[i].split(",");
+            ArrayList<String> n=new ArrayList();
+            for (int j = 0; j < n2.length; j++) {
+                    n.add(n2[j]);
+                    
+            }
+            nombres.add(n);
+        }
+        nombre=nombres;
+
     }
-    
+
 }
