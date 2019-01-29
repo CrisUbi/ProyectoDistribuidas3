@@ -9,6 +9,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,8 @@ import javax.faces.bean.SessionScoped;
 import pkg_interface.AutorCuda;
 import pkg_interface.CabeceraCuda;
 import pkg_interface.DetalleCuda;
+import pkg_interface.DetalleCudaPK;
+import pkg_interface.LibroCuda;
 import pkg_interface.cls_interface;
 
 /**
@@ -32,6 +35,17 @@ public class cls_reporte {
     List<CabeceraCuda> detalle = null;
     String mensaje = "";
     List<AutorCuda> reporte = null;
+    List<LibroCuda> reporte2 = null;
+    ArrayList<DetalleCuda> de1 = new ArrayList();
+     ArrayList<ArrayList<String>> nombre= new ArrayList();
+
+    public ArrayList<ArrayList<String>> getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(ArrayList<ArrayList<String>> nombre) {
+        this.nombre = nombre;
+    }
 
     public cls_reporte() {
     }
@@ -102,6 +116,22 @@ public class cls_reporte {
 
     public void setDetalle(List<CabeceraCuda> detalle) {
         this.detalle = detalle;
+    }
+
+    public List<LibroCuda> getReporte2() {
+        return reporte2;
+    }
+
+    public void setReporte2(List<LibroCuda> reporte2) {
+        this.reporte2 = reporte2;
+    }
+
+    public ArrayList<DetalleCuda> getDe1() {
+        return de1;
+    }
+
+    public void setDe1(ArrayList<DetalleCuda> de1) {
+        this.de1 = de1;
     }
 
 }

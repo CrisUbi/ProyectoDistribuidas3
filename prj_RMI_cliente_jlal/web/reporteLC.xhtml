@@ -61,18 +61,17 @@
             <p:dataTable id="tbl" var="car" value="#{cls_reporte.reporte}"
                          paginator="true" rows="15" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
                 <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="FECHA ENTREGA" />
-                    </f:facet>
                     <h:outputText value="#{car.apellidoAutor}" />
                 </p:column>
 
-                <p:column>
+                <p:columns value="#{cls_reporte.reporte}"
+                           var="mycolHeader" columnIndexVar="colIndex">
                     <f:facet name="header">
-                        <h:outputText value="CANTIDAD LIBROS" />
+                        <h:outputText value="#{mycolHeader.nombreAutor}" />
                     </f:facet>
-                    <h:outputText value="#{car.nombreAutor}" />
-                </p:column>
+                    <h:outputText value="#{mycolHeader.codigoAutor}" />
+                    <br />
+                </p:columns>
             </p:dataTable>
           
             <p:commandButton value="Excel" ajax="false" >
